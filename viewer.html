@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Website Viewer</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { width: 100%; height: 100vh; font-family: 'Segoe UI', Arial, sans-serif; overflow: hidden; background: #f0f2f5; }
+
+    /* Control bar */
+    #config {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.97);
+      border-radius: 12px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    #config.hidden {
+      opacity: 0;
+      transform: translateY(-20px);
+      pointer-events: none;
+    }
+
+    #config .icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    #urlInput {
+      flex: 1;
+      padding: 8px 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    #urlInput:focus {
+      border-color: #4a90d9;
+    }
+
+    #urlInput::placeholder {
+      color: #aaa;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      white-space: nowrap;
+    }
+
+    .btn:active { transform: scale(0.96); }
+
+    .btn-primary {
+      background: #4a90d9;
+      color: white;
+    }
+    .btn-primary:hover { background: #3a7bc8; }
+
+    .btn-hide {
+      background: #e8e8e8;
+      color: #555;
+      padding: 8px 10px;
+    }
+    .btn-hide:hover { background: #ddd; }
+
+    /* Toggle button (when controls are hidden) */
+    #toggleBtn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      z-index: 101;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      cursor: pointer;
+      font-size: 16px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    #toggleBtn:hover { background: rgba(255,255,255,1); }
+    #toggleBtn.visible { display: flex; }
+
+    /* iframe */
+    #webFrame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: white;
+    }
+
+    /* Error / status overlay */
+    #overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #f0f2f5;
+      z-index: 50;
+      text-align: center;
+      padding: 2em;
+    }
+
+    #overlay.hidden { display: none; }
+
+    #overlay .emoji { font-size: 48px; margin-bottom: 16px; }
+    #overlay h2 { color: #333; font-size: 20px; margin-bottom: 8px; }
+    #overlay p { color: #777; font-size: 14px; max-width: 400px; line-height: 1.5; }
+
+    /* Loading spinner */
+    #loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 60;
+      display: none;
+    }
+    #loading.active { display: block; }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 4px solid #e0e0e0;
+      border-top-color: #4a90d9;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+</head>
+<body>
+
+  <!-- Control bar -->
+  <div id="config">
+    <span class="icon">🌐</span>
+    <input id="urlInput" type="text" placeholder="Enter website URL (e.g. https://example.com)" />
+    <button class="btn btn-primary" onclick="loadUrl()">Load</button>
+    <button class="btn btn-hide" onclick="toggleControls()" title="Hide controls">✕</button>
+  </div>
+
+  <!-- Show controls button -->
+  <button id="toggleBtn" onclick="toggleControls()" title="Show controls">⚙</button>
+
+  <!-- Welcome overlay -->
+  <div id="overlay">
+    <div class="emoji">🌐</div>
+    <h2>Live Website Viewer</h2>
+    <p>Enter a website URL above and click <strong>Load</strong> to display it inside this slide.</p>
+  </div>
+
+  <!-- Loading indicator -->
+  <div id="loading"><div class="spinner"></div></div>
+
+  <!-- Website frame -->
+  <iframe id="webFrame" src="" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+
+  <script>
+    const urlInput = document.getElementById('urlInput');
+    const webFrame = document.getElementById('webFrame');
+    const overlay = document.getElementById('overlay');
+    const loading = document.getElementById('loading');
+    const config = document.getElementById('config');
+    const toggleBtn = document.getElementById('toggleBtn');
+
+    let controlsVisible = true;
+
+    // Normalize URL: add https:// if no protocol specified
+    function normalizeUrl(url) {
+      url = url.trim();
+      if (!url) return '';
+      if (!/^https?:\/\//i.test(url)) {
+        url = 'https://' + url;
+      }
+      return url;
+    }
+
+    // Validate URL format
+    function isValidUrl(str) {
+      try {
+        new URL(str);
+        return true;
+      } catch {
+        return false;
+      }
+    }
+
+    // Show error in overlay
+    function showError(title, message) {
+      overlay.classList.remove('hidden');
+      overlay.innerHTML = `
+        <div class="emoji">⚠️</div>
+        <h2>${title}</h2>
+        <p>${message}</p>
+      `;
+      loading.classList.remove('active');
+    }
+
+    // Show welcome screen
+    function showWelcome() {
+      overlay.classList.remove('hidden');
+      overlay.innerHTML = `
+        <div class="emoji">🌐</div>
+        <h2>Live Website Viewer</h2>
+        <p>Enter a website URL above and click <strong>Load</strong> to display it inside this slide.</p>
+      `;
+    }
+
+    // Toggle controls visibility (for presentation mode)
+    function toggleControls() {
+      controlsVisible = !controlsVisible;
+      if (controlsVisible) {
+        config.classList.remove('hidden');
+        toggleBtn.classList.remove('visible');
+      } else {
+        config.classList.add('hidden');
+        toggleBtn.classList.add('visible');
+      }
+    }
+
+    // Load URL into iframe
+    function loadUrl() {
+      let url = normalizeUrl(urlInput.value);
+
+      if (!url) {
+        showError('Empty URL', 'Please enter a website URL to load.');
+        return;
+      }
+
+      if (!isValidUrl(url)) {
+        showError('Invalid URL', 'The URL you entered is not valid. Please check it and try again.');
+        return;
+      }
+
+      // Update input with normalized URL
+      urlInput.value = url;
+
+      // Show loading
+      overlay.classList.add('hidden');
+      loading.classList.add('active');
+
+      // Set iframe src
+      webFrame.src = url;
+
+      // Save URL to slide via Office API
+      try {
+        Office.context.document.settings.set('webViewerUrl', url);
+        Office.context.document.settings.saveAsync();
+      } catch (e) {
+        console.log('Office API not available (standalone mode):', e);
+      }
+    }
+
+    // Handle iframe load events
+    webFrame.addEventListener('load', function () {
+      loading.classList.remove('active');
+      if (webFrame.src && webFrame.src !== 'about:blank') {
+        overlay.classList.add('hidden');
+      }
+    });
+
+    // Handle iframe errors
+    webFrame.addEventListener('error', function () {
+      loading.classList.remove('active');
+      showError(
+        'Could not load website',
+        'This website may block being embedded in iframes. Try a different URL or check your internet connection.'
+      );
+    });
+
+    // Timeout for iframe loading (10 seconds)
+    let loadTimeout;
+    const originalLoadUrl = loadUrl;
+
+    // Allow Enter key to trigger load
+    urlInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        loadUrl();
+      }
+    });
+
+    // Initialize with Office.js
+    Office.onReady(function () {
+      // Try to load saved URL for this slide
+      try {
+        const savedUrl = Office.context.document.settings.get('webViewerUrl');
+        if (savedUrl) {
+          urlInput.value = savedUrl;
+          overlay.classList.add('hidden');
+          loading.classList.add('active');
+          webFrame.src = savedUrl;
+        }
+      } catch (e) {
+        console.log('Office API not available:', e);
+      }
+    });
+  </script>
+</body>
+</html>

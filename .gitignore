@@ -1,0 +1,17 @@
+# IDE
+.vs/
+.vscode/
+*.suo
+*.user
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Claude Code
+.claude/
+
+# Office temp files
+~$*.docx
+~$*.pptx

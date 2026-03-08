@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:type="ContentApp">
+
+  <Id>e2b7c1a0-1234-5678-9abc-def012345678</Id>
+  <Version>1.1.0.0</Version>
+  <ProviderName>PeopleWorks Services</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+
+  <DisplayName DefaultValue="Live Website Viewer"/>
+  <Description DefaultValue="Embed and display live websites directly inside PowerPoint slides. Each slide can have its own URL."/>
+
+  <IconUrl DefaultValue="https://powerpointwebviewer.peopleworksservices.com/icon.png"/>
+  <SupportUrl DefaultValue="https://powerpointwebviewer.peopleworksservices.com/support"/>
+
+  <Hosts>
+    <Host Name="Presentation"/>
+  </Hosts>
+
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://powerpointwebviewer.peopleworksservices.com/viewer.html"/>
+  </DefaultSettings>
+
+  <Permissions>ReadWriteDocument</Permissions>
+</OfficeApp>

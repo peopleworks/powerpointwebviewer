@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Embed Live Websites in PowerPoint with a Custom Add-in</title>
+  <style>
+    :root {
+      --primary: #4a90d9;
+      --primary-dark: #2c3e50;
+      --bg: #f8f9fa;
+      --card-bg: #fff;
+      --code-bg: #1e1e2e;
+      --code-text: #cdd6f4;
+      --border: #e0e0e0;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: #333; line-height: 1.7; }
+
+    .header {
+      background: linear-gradient(135deg, #4a90d9, #357abd);
+      color: white;
+      padding: 2em;
+      text-align: center;
+    }
+    .header h1 { font-size: 1.8em; margin-bottom: 0.3em; }
+    .header p { opacity: 0.9; font-size: 1.05em; }
+
+    .lang-switch {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 1em;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .lang-btn {
+      padding: 8px 20px;
+      border: 2px solid var(--primary);
+      border-radius: 20px;
+      background: white;
+      color: var(--primary);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .lang-btn:hover, .lang-btn.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 2em; }
+
+    .content { display: none; }
+    .content.active { display: block; }
+
+    h2 {
+      color: var(--primary-dark);
+      font-size: 1.4em;
+      margin: 1.5em 0 0.5em;
+      padding-bottom: 0.3em;
+      border-bottom: 2px solid var(--primary);
+      display: inline-block;
+    }
+
+    p { margin: 0.8em 0; }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.5em;
+      margin: 1em 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1em;
+      margin: 1em 0;
+    }
+    .feature-item {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 1.2em;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+    .feature-item .icon { font-size: 2em; margin-bottom: 0.3em; }
+    .feature-item h3 { font-size: 1em; color: var(--primary-dark); }
+    .feature-item p { font-size: 0.9em; color: #666; }
+
+    pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 1.2em;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: 0.85em;
+      line-height: 1.5;
+      margin: 1em 0;
+    }
+
+    code {
+      background: #eef;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+    pre code { background: none; padding: 0; }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px; height: 32px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      font-weight: bold;
+      font-size: 0.9em;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+
+    .step-title {
+      display: flex;
+      align-items: center;
+      margin: 2em 0 0.5em;
+      font-size: 1.3em;
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+
+    ul { margin: 0.8em 0; padding-left: 1.5em; }
+    li { margin: 0.4em 0; }
+
+    .badge {
+      display: inline-block;
+      background: #e8f4e8;
+      color: #2d7d2d;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 0.8em;
+      font-weight: 600;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2em;
+      color: #999;
+      font-size: 0.9em;
+      border-top: 1px solid var(--border);
+      margin-top: 2em;
+    }
+  </style>
+  <script>
+    function switchLang(lang) {
+      document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
+      document.getElementById(lang).classList.add('active');
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+    }
+  </script>
+</head>
+<body>
+
+<div class="header">
+  <h1>Live Website Viewer for PowerPoint</h1>
+  <p>Embed live, interactive websites directly inside your presentations</p>
+</div>
+
+<div class="lang-switch">
+  <button class="lang-btn active" data-lang="en" onclick="switchLang('en')">English</button>
+  <button class="lang-btn" data-lang="es" onclick="switchLang('es')">Español</button>
+</div>
+
+<!-- ==================== ENGLISH ==================== -->
+<div id="en" class="content active">
+<div class="container">
+
+  <div class="feature-grid">
+    <div class="feature-item">
+      <div class="icon">🌐</div>
+      <h3>Live Websites</h3>
+      <p>Display any website directly inside your slides</p>
+    </div>
+    <div class="feature-item">
+      <div class="icon">🎯</div>
+      <h3>Per-Slide URLs</h3>
+      <p>Each slide remembers its own website URL</p>
+    </div>
+    <div class="feature-item">
+      <div class="icon">🎨</div>
+      <h3>Clean UI</h3>
+      <p>Hide controls during presentations for a seamless look</p>
+    </div>
+    <div class="feature-item">
+      <div class="icon">⚡</div>
+      <h3>Easy Setup</h3>
+      <p>Just two files: viewer.html + manifest.xml</p>
+    </div>
+  </div>
+
+  <div class="step-title"><span class="step-number">1</span> Host the Viewer Page</div>
+  <p>Create <code>viewer.html</code> on your server (e.g. <code>https://powerpointwebviewer.peopleworksservices.com/viewer.html</code>). This is the page that PowerPoint will load inside the slide:</p>
+
+  <div class="card">
+    <p><strong>Key features of the viewer:</strong></p>
+    <ul>
+      <li>Auto-adds <code>https://</code> if you forget the protocol</li>
+      <li>Shows a loading spinner while the page loads</li>
+      <li>Friendly error messages if a site can't be embedded</li>
+      <li>Hide/show controls button for presentation mode</li>
+      <li>Press <strong>Enter</strong> to load (no need to click the button)</li>
+      <li>Saves the URL per slide using Office Settings API</li>
+    </ul>
+  </div>
+
+  <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Website Viewer&lt;/title&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;style&gt;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { width: 100%; height: 100vh; font-family: 'Segoe UI', sans-serif;
+           overflow: hidden; background: #f0f2f5; }
+
+    #config {
+      position: absolute; top: 12px; left: 12px; right: 12px; z-index: 100;
+      background: rgba(255,255,255,0.97); border-radius: 12px;
+      padding: 10px 14px; display: flex; align-items: center; gap: 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    #config.hidden { opacity: 0; transform: translateY(-20px); pointer-events: none; }
+
+    #urlInput {
+      flex: 1; padding: 8px 12px; border: 2px solid #e0e0e0;
+      border-radius: 8px; font-size: 14px; outline: none;
+    }
+    #urlInput:focus { border-color: #4a90d9; }
+
+    .btn {
+      padding: 8px 16px; border: none; border-radius: 8px;
+      font-size: 13px; font-weight: 600; cursor: pointer;
+    }
+    .btn-primary { background: #4a90d9; color: white; }
+    .btn-hide { background: #e8e8e8; color: #555; }
+
+    #toggleBtn {
+      position: absolute; top: 8px; right: 8px; z-index: 101;
+      width: 36px; height: 36px; border-radius: 50%; border: none;
+      background: rgba(255,255,255,0.9); cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      display: none; align-items: center; justify-content: center;
+    }
+    #toggleBtn.visible { display: flex; }
+
+    #webFrame { width: 100%; height: 100%; border: none; }
+
+    #overlay {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; background: #f0f2f5; z-index: 50;
+      text-align: center; padding: 2em;
+    }
+    #overlay.hidden { display: none; }
+  &lt;/style&gt;
+  &lt;script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id="config"&gt;
+    &lt;span&gt;🌐&lt;/span&gt;
+    &lt;input id="urlInput" type="text" placeholder="Enter website URL" /&gt;
+    &lt;button class="btn btn-primary" onclick="loadUrl()"&gt;Load&lt;/button&gt;
+    &lt;button class="btn btn-hide" onclick="toggleControls()"&gt;✕&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;button id="toggleBtn" onclick="toggleControls()"&gt;⚙&lt;/button&gt;
+  &lt;div id="overlay"&gt;
+    &lt;h2&gt;Live Website Viewer&lt;/h2&gt;
+    &lt;p&gt;Enter a URL above and click Load&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;iframe id="webFrame" src=""
+    sandbox="allow-scripts allow-same-origin allow-forms allow-popups"&gt;
+  &lt;/iframe&gt;
+
+  &lt;script&gt;
+    const urlInput = document.getElementById('urlInput');
+    const webFrame = document.getElementById('webFrame');
+    const overlay  = document.getElementById('overlay');
+    let controlsVisible = true;
+
+    function normalizeUrl(url) {
+      url = url.trim();
+      if (!url) return '';
+      if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+      return url;
+    }
+
+    function loadUrl() {
+      let url = normalizeUrl(urlInput.value);
+      if (!url) return;
+      urlInput.value = url;
+      overlay.classList.add('hidden');
+      webFrame.src = url;
+      try {
+        Office.context.document.settings.set('webViewerUrl', url);
+        Office.context.document.settings.saveAsync();
+      } catch(e) { console.log('Office API not available:', e); }
+    }
+
+    function toggleControls() {
+      controlsVisible = !controlsVisible;
+      document.getElementById('config').classList.toggle('hidden');
+      document.getElementById('toggleBtn').classList.toggle('visible');
+    }
+
+    urlInput.addEventListener('keydown', e =&gt; { if (e.key === 'Enter') loadUrl(); });
+
+    Office.onReady(() =&gt; {
+      try {
+        const saved = Office.context.document.settings.get('webViewerUrl');
+        if (saved) { urlInput.value = saved; webFrame.src = saved;
+                     overlay.classList.add('hidden'); }
+      } catch(e) {}
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+  <div class="step-title"><span class="step-number">2</span> Create the Manifest</div>
+  <p>Save the following XML as <code>manifest.xml</code>. This tells PowerPoint where to find your add-in:</p>
+
+  <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:type="ContentApp"&gt;
+
+  &lt;Id&gt;e2b7c1a0-1234-5678-9abc-def012345678&lt;/Id&gt;
+  &lt;Version&gt;1.1.0.0&lt;/Version&gt;
+  &lt;ProviderName&gt;PeopleWorks Services&lt;/ProviderName&gt;
+  &lt;DefaultLocale&gt;en-US&lt;/DefaultLocale&gt;
+
+  &lt;DisplayName DefaultValue="Live Website Viewer"/&gt;
+  &lt;Description DefaultValue="Embed and display live websites directly inside PowerPoint slides."/&gt;
+
+  &lt;IconUrl DefaultValue="https://powerpointwebviewer.peopleworksservices.com/icon.png"/&gt;
+  &lt;SupportUrl DefaultValue="https://powerpointwebviewer.peopleworksservices.com/support"/&gt;
+
+  &lt;Hosts&gt;
+    &lt;Host Name="Presentation"/&gt;
+  &lt;/Hosts&gt;
+
+  &lt;DefaultSettings&gt;
+    &lt;SourceLocation DefaultValue="https://powerpointwebviewer.peopleworksservices.com/viewer.html"/&gt;
+  &lt;/DefaultSettings&gt;
+
+  &lt;Permissions&gt;ReadWriteDocument&lt;/Permissions&gt;
+&lt;/OfficeApp&gt;</code></pre>
+
+  <div class="step-title"><span class="step-number">3</span> Install & Use</div>
+  <div class="card">
+    <ul>
+      <li>Open PowerPoint and go to <strong>Insert &rarr; My Add-ins &rarr; Manage My Add-ins &rarr; Upload My Add-in</strong></li>
+      <li>Select your <code>manifest.xml</code> file</li>
+      <li>Insert the add-in into any slide</li>
+      <li>Type a URL and press <strong>Enter</strong> or click <strong>Load</strong></li>
+      <li>Click <strong>✕</strong> to hide controls during your presentation</li>
+      <li>Click the <strong>⚙</strong> button to bring controls back</li>
+    </ul>
+  </div>
+
+  <p>Share the manifest with your colleagues or community &mdash; they'll be able to use the same add-in instantly!</p>
+
+</div>
+</div>
+
+<!-- ==================== SPANISH ==================== -->
+<div id="es" class="content">
+<div class="container">
+
+  <div class="feature-grid">
+    <div class="feature-item">
+      <div class="icon">🌐</div>
+      <h3>Sitios Web en Vivo</h3>
+      <p>Muestra cualquier sitio web directamente en tus diapositivas</p>
+    </div>
+    <div class="feature-item">
+      <div class="icon">🎯</div>
+      <h3>URL por Diapositiva</h3>
+      <p>Cada diapositiva recuerda su propia URL</p>
+    </div>
+    <div class="feature-item">
+      <div class="icon">🎨</div>
+      <h3>UI Limpio</h3>
+      <p>Oculta los controles durante la presentación</p>
+    </div>
+    <div class="feature-item">
+      <div class="icon">⚡</div>
+      <h3>Fácil de Instalar</h3>
+      <p>Solo dos archivos: viewer.html + manifest.xml</p>
+    </div>
+  </div>
+
+  <div class="step-title"><span class="step-number">1</span> Hospeda la página Viewer</div>
+  <p>Crea el archivo <code>viewer.html</code> en tu servidor (por ejemplo <code>https://powerpointwebviewer.peopleworksservices.com/viewer.html</code>). Esta es la página que PowerPoint cargará dentro de la diapositiva.</p>
+
+  <div class="card">
+    <p><strong>Características del viewer mejorado:</strong></p>
+    <ul>
+      <li>Agrega <code>https://</code> automáticamente si olvidas el protocolo</li>
+      <li>Muestra un spinner de carga mientras la página carga</li>
+      <li>Mensajes de error amigables si un sitio no puede incrustarse</li>
+      <li>Botón para ocultar/mostrar controles en modo presentación</li>
+      <li>Presiona <strong>Enter</strong> para cargar (no necesitas hacer clic)</li>
+      <li>Guarda la URL por diapositiva usando Office Settings API</li>
+    </ul>
+  </div>
+
+  <p>El código completo del viewer está en la sección en inglés arriba. Puedes copiarlo directamente.</p>
+
+  <div class="step-title"><span class="step-number">2</span> Crea el Manifiesto</div>
+  <p>Guarda el siguiente XML como <code>manifest.xml</code>. Este archivo le dice a PowerPoint dónde encontrar tu complemento:</p>
+  <p>El código del manifiesto es el mismo mostrado en la sección en inglés.</p>
+
+  <div class="step-title"><span class="step-number">3</span> Instala y Usa</div>
+  <div class="card">
+    <ul>
+      <li>Abre PowerPoint y ve a <strong>Insertar &rarr; Mis complementos &rarr; Administrar mis complementos &rarr; Cargar mi complemento</strong></li>
+      <li>Selecciona tu archivo <code>manifest.xml</code></li>
+      <li>Inserta el complemento en cualquier diapositiva</li>
+      <li>Escribe una URL y presiona <strong>Enter</strong> o haz clic en <strong>Load</strong></li>
+      <li>Haz clic en <strong>✕</strong> para ocultar los controles durante tu presentación</li>
+      <li>Haz clic en el botón <strong>⚙</strong> para mostrar los controles de nuevo</li>
+    </ul>
+  </div>
+
+  <p>Comparte el manifiesto con tus colegas o la comunidad — podrán usar el mismo complemento al instante.</p>
+
+</div>
+</div>
+
+<div class="footer">
+  <p>Live Website Viewer for PowerPoint &mdash; PeopleWorks Services</p>
+</div>
+
+</body>
+</html>
