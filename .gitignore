@@ -12,6 +12,9 @@ Desktop.ini
 # Claude Code
 .claude/
 
+# Personal docs (video scripts, notes)
+docs/
+
 # Office temp files
 ~$*.docx
 ~$*.pptx
