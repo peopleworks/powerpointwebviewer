@@ -130,6 +130,63 @@
     #overlay h2 { color: #333; font-size: 20px; margin-bottom: 8px; }
     #overlay p { color: #777; font-size: 14px; max-width: 400px; line-height: 1.5; }
 
+    /* Branding footer */
+    #branding {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 90;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      color: rgba(255,255,255,0.85);
+      padding: 6px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      transition: opacity 0.3s ease;
+    }
+    #branding.hidden { opacity: 0; pointer-events: none; }
+    #branding .brand-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #branding .brand-logo {
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(135deg, #4a90d9, #63b3ed);
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 12px;
+      color: white;
+    }
+    #branding .brand-name {
+      font-weight: 700;
+      color: #63b3ed;
+      letter-spacing: 0.3px;
+    }
+    #branding .brand-separator {
+      color: rgba(255,255,255,0.3);
+      margin: 0 2px;
+    }
+    #branding .brand-author {
+      color: rgba(255,255,255,0.6);
+      font-weight: 400;
+    }
+    #branding .brand-right {
+      color: rgba(255,255,255,0.4);
+      font-size: 10px;
+    }
+    #branding a {
+      color: #63b3ed;
+      text-decoration: none;
+    }
+    #branding a:hover { text-decoration: underline; }
+
     /* Loading spinner */
     #loading {
       position: absolute;
@@ -169,6 +226,22 @@
     <div class="emoji">🌐</div>
     <h2>Live Website Viewer</h2>
     <p>Enter a website URL above and click <strong>Load</strong> to display it inside this slide.</p>
+    <div style="margin-top: 24px; opacity: 0.5; font-size: 12px; color: #999;">
+      Created by <strong>Pedro Hernandez</strong> &mdash; PeopleWorks Services
+    </div>
+  </div>
+
+  <!-- Branding footer -->
+  <div id="branding">
+    <div class="brand-left">
+      <div class="brand-logo">P</div>
+      <span class="brand-name">PeopleWorks</span>
+      <span class="brand-separator">|</span>
+      <span class="brand-author">by Pedro Hernandez</span>
+    </div>
+    <div class="brand-right">
+      <a href="https://powerpointwebviewer.peopleworksservices.com" target="_blank">powerpointwebviewer.peopleworksservices.com</a>
+    </div>
   </div>
 
   <!-- Loading indicator -->
@@ -184,6 +257,7 @@
     const loading = document.getElementById('loading');
     const config = document.getElementById('config');
     const toggleBtn = document.getElementById('toggleBtn');
+    const branding = document.getElementById('branding');
 
     let controlsVisible = true;
 
@@ -225,6 +299,9 @@
         <div class="emoji">🌐</div>
         <h2>Live Website Viewer</h2>
         <p>Enter a website URL above and click <strong>Load</strong> to display it inside this slide.</p>
+        <div style="margin-top: 24px; opacity: 0.5; font-size: 12px; color: #999;">
+          Created by <strong>Pedro Hernandez</strong> &mdash; PeopleWorks Services
+        </div>
       `;
     }
 
@@ -257,8 +334,9 @@
       // Update input with normalized URL
       urlInput.value = url;
 
-      // Show loading
+      // Show loading, hide branding
       overlay.classList.add('hidden');
+      branding.classList.add('hidden');
       loading.classList.add('active');
 
       // Set iframe src
