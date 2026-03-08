@@ -365,14 +365,57 @@
 &lt;/OfficeApp&gt;</code></pre>
 
   <div class="step-title"><span class="step-number">3</span> Install & Use</div>
+
+  <h2>Option A: PowerPoint Online (easiest)</h2>
   <div class="card">
     <ul>
-      <li>Open PowerPoint and go to <strong>Insert &rarr; My Add-ins &rarr; Manage My Add-ins &rarr; Upload My Add-in</strong></li>
+      <li>Go to <a href="https://www.office.com" target="_blank"><strong>PowerPoint Online</strong></a> and open a presentation</li>
+      <li>Go to <strong>Insert &rarr; Add-ins &rarr; Upload My Add-in</strong></li>
       <li>Select your <code>manifest.xml</code> file</li>
       <li>Insert the add-in into any slide</li>
       <li>Type a URL and press <strong>Enter</strong> or click <strong>Load</strong></li>
-      <li>Click <strong>✕</strong> to hide controls during your presentation</li>
-      <li>Click the <strong>⚙</strong> button to bring controls back</li>
+    </ul>
+  </div>
+
+  <h2>Option B: PowerPoint Desktop (Windows)</h2>
+  <div class="card" style="border-left: 4px solid #e67e22;">
+    <p><strong>Important:</strong> PowerPoint Desktop does <em>not</em> have an "Upload" button. You need to set up a shared folder catalog first.</p>
+  </div>
+  <div class="card">
+    <p><strong>Step 1: Create a shared folder</strong></p>
+    <ul>
+      <li>Create a folder on your PC, e.g. <code>C:\AddinManifests</code></li>
+      <li>Copy <code>manifest.xml</code> into that folder</li>
+      <li>Right-click the folder &rarr; <strong>Properties</strong> &rarr; <strong>Sharing</strong> tab &rarr; <strong>Share...</strong></li>
+      <li>Add your user (or "Everyone") with <strong>Read</strong> permission</li>
+      <li>Note the network path (e.g. <code>\\YOUR-PC\AddinManifests</code>)</li>
+    </ul>
+    <p><strong>Step 2: Register in PowerPoint</strong></p>
+    <ul>
+      <li>Open PowerPoint &rarr; <strong>File</strong> &rarr; <strong>Options</strong></li>
+      <li>Click <strong>Trust Center</strong> &rarr; <strong>Trust Center Settings...</strong></li>
+      <li>Click <strong>Trusted Add-in Catalogs</strong></li>
+      <li>In <strong>Catalog URL</strong>, paste the network path: <code>\\YOUR-PC\AddinManifests</code></li>
+      <li>Click <strong>Add catalog</strong>, then check <strong>Show in Menu</strong></li>
+      <li>Click <strong>OK</strong> &rarr; <strong>OK</strong></li>
+      <li><strong>Close and reopen PowerPoint</strong> (required!)</li>
+    </ul>
+    <p><strong>Step 3: Load the add-in</strong></p>
+    <ul>
+      <li>Go to <strong>Home</strong> &rarr; <strong>Add-ins</strong> (in the ribbon)</li>
+      <li>Click <strong>Advanced</strong> (at the bottom of the panel)</li>
+      <li>Select <strong>SHARED FOLDER</strong> at the top</li>
+      <li>Select "Live Website Viewer" and click <strong>Add</strong></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <p><strong>Using the add-in:</strong></p>
+    <ul>
+      <li>Type a URL and press <strong>Enter</strong> or click <strong>Load</strong></li>
+      <li>Click <strong>&#10005;</strong> to hide controls during your presentation</li>
+      <li>Click the <strong>&#9881;</strong> button to bring controls back</li>
+      <li>Each slide can have its own URL</li>
     </ul>
   </div>
 
@@ -430,18 +473,61 @@
   <p>El código del manifiesto es el mismo mostrado en la sección en inglés.</p>
 
   <div class="step-title"><span class="step-number">3</span> Instala y Usa</div>
+
+  <h2>Opción A: PowerPoint Online (más fácil)</h2>
   <div class="card">
     <ul>
-      <li>Abre PowerPoint y ve a <strong>Insertar &rarr; Mis complementos &rarr; Administrar mis complementos &rarr; Cargar mi complemento</strong></li>
+      <li>Ve a <a href="https://www.office.com" target="_blank"><strong>PowerPoint Online</strong></a> y abre una presentación</li>
+      <li>Ve a <strong>Insertar &rarr; Complementos &rarr; Cargar mi complemento</strong></li>
       <li>Selecciona tu archivo <code>manifest.xml</code></li>
       <li>Inserta el complemento en cualquier diapositiva</li>
       <li>Escribe una URL y presiona <strong>Enter</strong> o haz clic en <strong>Load</strong></li>
-      <li>Haz clic en <strong>✕</strong> para ocultar los controles durante tu presentación</li>
-      <li>Haz clic en el botón <strong>⚙</strong> para mostrar los controles de nuevo</li>
     </ul>
   </div>
 
-  <p>Comparte el manifiesto con tus colegas o la comunidad — podrán usar el mismo complemento al instante.</p>
+  <h2>Opción B: PowerPoint Desktop (Windows)</h2>
+  <div class="card" style="border-left: 4px solid #e67e22;">
+    <p><strong>Importante:</strong> PowerPoint Desktop <em>no</em> tiene botón de "Cargar complemento". Necesitas configurar una carpeta compartida primero.</p>
+  </div>
+  <div class="card">
+    <p><strong>Paso 1: Crear una carpeta compartida</strong></p>
+    <ul>
+      <li>Crea una carpeta en tu PC, por ejemplo <code>C:\AddinManifests</code></li>
+      <li>Copia <code>manifest.xml</code> en esa carpeta</li>
+      <li>Click derecho en la carpeta &rarr; <strong>Propiedades</strong> &rarr; pestaña <strong>Compartir</strong> &rarr; <strong>Compartir...</strong></li>
+      <li>Agrega tu usuario (o "Everyone") con permiso de <strong>Lectura</strong></li>
+      <li>Anota la ruta de red (ej. <code>\\TU-PC\AddinManifests</code>)</li>
+    </ul>
+    <p><strong>Paso 2: Registrar en PowerPoint</strong></p>
+    <ul>
+      <li>Abre PowerPoint &rarr; <strong>Archivo</strong> &rarr; <strong>Opciones</strong></li>
+      <li>Click en <strong>Centro de confianza</strong> &rarr; <strong>Configuración del Centro de confianza...</strong></li>
+      <li>Click en <strong>Catálogos de complementos de confianza</strong></li>
+      <li>En <strong>URL del catálogo</strong>, pega la ruta: <code>\\TU-PC\AddinManifests</code></li>
+      <li>Click en <strong>Agregar catálogo</strong>, luego marca <strong>Mostrar en el menú</strong></li>
+      <li>Click en <strong>Aceptar</strong> &rarr; <strong>Aceptar</strong></li>
+      <li><strong>Cierra y vuelve a abrir PowerPoint</strong> (¡obligatorio!)</li>
+    </ul>
+    <p><strong>Paso 3: Cargar el complemento</strong></p>
+    <ul>
+      <li>Ve a <strong>Inicio</strong> &rarr; <strong>Complementos</strong> (en la cinta)</li>
+      <li>Click en <strong>Avanzado</strong> (en la parte inferior del panel)</li>
+      <li>Selecciona <strong>CARPETA COMPARTIDA</strong> en la parte superior</li>
+      <li>Selecciona "Live Website Viewer" y haz click en <strong>Agregar</strong></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <p><strong>Usando el complemento:</strong></p>
+    <ul>
+      <li>Escribe una URL y presiona <strong>Enter</strong> o haz clic en <strong>Load</strong></li>
+      <li>Haz clic en <strong>&#10005;</strong> para ocultar los controles durante tu presentación</li>
+      <li>Haz clic en el botón <strong>&#9881;</strong> para mostrar los controles de nuevo</li>
+      <li>Cada diapositiva puede tener su propia URL</li>
+    </ul>
+  </div>
+
+  <p>Comparte el manifiesto con tus colegas o la comunidad &mdash; podrán usar el mismo complemento al instante.</p>
 
 </div>
 </div>

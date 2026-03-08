@@ -17,23 +17,53 @@ Embed live, interactive websites directly inside your PowerPoint presentations. 
 
 ## Quick Start
 
-### Option 1: Use the hosted version (easiest)
+### Option A: PowerPoint Online (easiest)
 
 1. Download [`manifest.xml`](manifest.xml)
-2. Open PowerPoint
-3. Go to **Insert > My Add-ins > Upload My Add-in**
+2. Go to [PowerPoint Online](https://www.office.com) and open a presentation
+3. Go to **Insert > Add-ins > Upload My Add-in**
 4. Select the `manifest.xml` file
 5. Insert the add-in into any slide
 6. Enter a URL and press **Enter**
 
 The viewer is hosted at `https://powerpointwebviewer.peopleworksservices.com/viewer.html` — no server setup needed.
 
-### Option 2: Self-host
+### Option B: PowerPoint Desktop (Windows)
+
+> **Important:** PowerPoint Desktop does **not** have an "Upload" button. You need to set up a shared folder catalog.
+
+**Step 1: Create a shared folder for manifests**
+
+1. Create a folder on your PC, e.g. `C:\AddinManifests`
+2. Copy `manifest.xml` into that folder
+3. Right-click the folder > **Properties** > **Sharing** tab > **Share...**
+4. Add your user (or "Everyone") with **Read** permission
+5. Note the network path (e.g. `\\YOUR-PC\AddinManifests`)
+
+**Step 2: Register the folder in PowerPoint**
+
+1. Open PowerPoint > **File** > **Options**
+2. Click **Trust Center** > **Trust Center Settings...**
+3. Click **Trusted Add-in Catalogs**
+4. In **Catalog URL**, paste the network path: `\\YOUR-PC\AddinManifests`
+5. Click **Add catalog**
+6. Check the **Show in Menu** checkbox
+7. Click **OK** > **OK**
+8. **Close and reopen PowerPoint** (required)
+
+**Step 3: Load the add-in**
+
+1. Go to **Home** > **Add-ins** (in the ribbon)
+2. Click **Advanced** (at the bottom)
+3. Select **SHARED FOLDER** at the top
+4. Select "Live Website Viewer" and click **Add**
+
+### Option C: Self-host
 
 1. Clone this repository
 2. Host `viewer.html` on your own HTTPS server
 3. Edit `manifest.xml` and update the `SourceLocation` URL to point to your server
-4. Upload the modified `manifest.xml` into PowerPoint
+4. Follow Option A or B to load the modified manifest
 
 ## Files
 
