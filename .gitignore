@@ -18,3 +18,6 @@ docs/
 # Office temp files
 ~$*.docx
 ~$*.pptx
+
+# Internal tools (icon generator)
+icon-preview.html

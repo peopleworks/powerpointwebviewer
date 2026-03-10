@@ -410,7 +410,7 @@
 
   <div class="step-title"><span class="step-number">3</span> Install & Use</div>
 
-  <h2>Option A: PowerPoint Online (easiest)</h2>
+  <h2>Option A: PowerPoint Online</h2>
   <div class="card">
     <ul>
       <li>Go to <a href="https://www.office.com" target="_blank"><strong>PowerPoint Online</strong></a> and open a presentation</li>
@@ -420,8 +420,16 @@
       <li>Type a URL and press <strong>Enter</strong> or click <strong>Load</strong></li>
     </ul>
   </div>
+  <div class="card" style="border-left: 4px solid #ffc107;">
+    <p><strong>Note for PowerPoint Online users:</strong> The browser enforces strict security rules. Many websites (Google, YouTube, Facebook, etc.) block being embedded inside frames. If a website does not display:</p>
+    <ul>
+      <li>Click the <strong>"Window"</strong> button in the toolbar to open the site in a separate browser window using Office's Dialog API</li>
+      <li>If the iframe times out, you'll see an <strong>"Open in Window"</strong> button automatically</li>
+      <li>Sites that work well in frames: custom dashboards, internal tools, documentation sites, and sites without <code>X-Frame-Options</code> headers</li>
+    </ul>
+  </div>
 
-  <h2>Option B: PowerPoint Desktop (Windows)</h2>
+  <h2>Option B: PowerPoint Desktop (Windows) &mdash; Recommended</h2>
   <div class="card" style="border-left: 4px solid #e67e22;">
     <p><strong>Important:</strong> PowerPoint Desktop does <em>not</em> have an "Upload" button. You need to set up a shared folder catalog first.</p>
   </div>
@@ -460,6 +468,28 @@
       <li>Click <strong>&#10005;</strong> to hide controls during your presentation</li>
       <li>Click the <strong>&#9881;</strong> button to bring controls back</li>
       <li>Each slide can have its own URL</li>
+      <li>In PowerPoint Online, use the <strong>"Window"</strong> button if a site doesn't load in the frame</li>
+    </ul>
+  </div>
+
+  <h2>Troubleshooting</h2>
+  <div class="card">
+    <p><strong>Website shows blank or doesn't load (PowerPoint Online):</strong></p>
+    <ul>
+      <li>Many websites block iframe embedding for security. This is a browser limitation, not a bug.</li>
+      <li>Use the <strong>"Window"</strong> button to open the site via Office's Dialog API instead.</li>
+      <li>The add-in auto-detects PowerPoint Online and shows a yellow badge + extra tips.</li>
+    </ul>
+    <p style="margin-top: 1em;"><strong>Add-in icon disappears (Desktop):</strong></p>
+    <ul>
+      <li>Sideloaded add-ins (via shared folder) don't pin to the ribbon permanently. You need to insert the add-in on each slide where you want it.</li>
+      <li>Once inserted into a slide, the add-in is <em>saved with the presentation file</em> &mdash; it will appear when you reopen that file.</li>
+      <li>For permanent ribbon access, the add-in would need to be published to Microsoft AppSource (centralized deployment).</li>
+    </ul>
+    <p style="margin-top: 1em;"><strong>Sites that typically work in frames:</strong></p>
+    <ul>
+      <li>Wikipedia, custom dashboards, Grafana, internal tools, documentation sites</li>
+      <li>Sites that do NOT work: Google, YouTube, Facebook, Twitter/X, most banking sites</li>
     </ul>
   </div>
 
@@ -518,7 +548,7 @@
 
   <div class="step-title"><span class="step-number">3</span> Instala y Usa</div>
 
-  <h2>Opción A: PowerPoint Online (más fácil)</h2>
+  <h2>Opción A: PowerPoint Online</h2>
   <div class="card">
     <ul>
       <li>Ve a <a href="https://www.office.com" target="_blank"><strong>PowerPoint Online</strong></a> y abre una presentación</li>
@@ -528,8 +558,16 @@
       <li>Escribe una URL y presiona <strong>Enter</strong> o haz clic en <strong>Load</strong></li>
     </ul>
   </div>
+  <div class="card" style="border-left: 4px solid #ffc107;">
+    <p><strong>Nota para usuarios de PowerPoint Online:</strong> El navegador aplica reglas de seguridad estrictas. Muchos sitios web (Google, YouTube, Facebook, etc.) bloquean ser incrustados dentro de frames. Si un sitio no se muestra:</p>
+    <ul>
+      <li>Haz clic en el botón <strong>"Window"</strong> en la barra de herramientas para abrir el sitio en una ventana separada usando la API de Diálogos de Office</li>
+      <li>Si el iframe expira, verás un botón <strong>"Open in Window"</strong> automáticamente</li>
+      <li>Sitios que funcionan bien en frames: dashboards personalizados, herramientas internas, sitios de documentación y sitios sin cabeceras <code>X-Frame-Options</code></li>
+    </ul>
+  </div>
 
-  <h2>Opción B: PowerPoint Desktop (Windows)</h2>
+  <h2>Opción B: PowerPoint Desktop (Windows) &mdash; Recomendado</h2>
   <div class="card" style="border-left: 4px solid #e67e22;">
     <p><strong>Importante:</strong> PowerPoint Desktop <em>no</em> tiene botón de "Cargar complemento". Necesitas configurar una carpeta compartida primero.</p>
   </div>
@@ -568,6 +606,28 @@
       <li>Haz clic en <strong>&#10005;</strong> para ocultar los controles durante tu presentación</li>
       <li>Haz clic en el botón <strong>&#9881;</strong> para mostrar los controles de nuevo</li>
       <li>Cada diapositiva puede tener su propia URL</li>
+      <li>En PowerPoint Online, usa el botón <strong>"Window"</strong> si un sitio no carga en el frame</li>
+    </ul>
+  </div>
+
+  <h2>Solución de Problemas</h2>
+  <div class="card">
+    <p><strong>El sitio web se ve en blanco o no carga (PowerPoint Online):</strong></p>
+    <ul>
+      <li>Muchos sitios web bloquean la incrustación en iframes por seguridad. Esto es una limitación del navegador, no un error del complemento.</li>
+      <li>Usa el botón <strong>"Window"</strong> para abrir el sitio mediante la API de Diálogos de Office.</li>
+      <li>El complemento detecta automáticamente PowerPoint Online y muestra consejos adicionales.</li>
+    </ul>
+    <p style="margin-top: 1em;"><strong>El icono del complemento desaparece (Desktop):</strong></p>
+    <ul>
+      <li>Los complementos cargados por carpeta compartida (sideloaded) no se fijan permanentemente en la cinta. Necesitas insertar el complemento en cada diapositiva donde lo quieras usar.</li>
+      <li>Una vez insertado en una diapositiva, el complemento se <em>guarda con el archivo de presentación</em> &mdash; aparecerá cuando vuelvas a abrir ese archivo.</li>
+      <li>Para acceso permanente en la cinta, el complemento necesitaría publicarse en Microsoft AppSource (despliegue centralizado).</li>
+    </ul>
+    <p style="margin-top: 1em;"><strong>Sitios que típicamente funcionan en frames:</strong></p>
+    <ul>
+      <li>Wikipedia, dashboards personalizados, Grafana, herramientas internas, sitios de documentación</li>
+      <li>Sitios que NO funcionan: Google, YouTube, Facebook, Twitter/X, la mayoría de sitios bancarios</li>
     </ul>
   </div>
 

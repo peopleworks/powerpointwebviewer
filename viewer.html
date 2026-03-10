@@ -44,6 +44,7 @@
       font-size: 14px;
       outline: none;
       transition: border-color 0.2s;
+      min-width: 0;
     }
 
     #urlInput:focus {
@@ -72,6 +73,13 @@
       color: white;
     }
     .btn-primary:hover { background: #3a7bc8; }
+
+    .btn-window {
+      background: #27ae60;
+      color: white;
+      padding: 8px 12px;
+    }
+    .btn-window:hover { background: #219a52; }
 
     .btn-hide {
       background: #e8e8e8;
@@ -102,6 +110,31 @@
     #toggleBtn:hover { background: rgba(255,255,255,1); }
     #toggleBtn.visible { display: flex; }
 
+    /* Environment badge */
+    #envBadge {
+      position: absolute;
+      top: 58px;
+      right: 12px;
+      z-index: 100;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      transition: opacity 0.3s ease;
+    }
+    #envBadge.online {
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffc107;
+    }
+    #envBadge.desktop {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #28a745;
+    }
+    #envBadge.hidden { opacity: 0; pointer-events: none; }
+
     /* iframe */
     #webFrame {
       width: 100%;
@@ -128,7 +161,36 @@
 
     #overlay .emoji { font-size: 48px; margin-bottom: 16px; }
     #overlay h2 { color: #333; font-size: 20px; margin-bottom: 8px; }
-    #overlay p { color: #777; font-size: 14px; max-width: 400px; line-height: 1.5; }
+    #overlay p { color: #777; font-size: 14px; max-width: 460px; line-height: 1.5; }
+    #overlay .overlay-btn {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 10px 24px;
+      background: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    #overlay .overlay-btn:hover { background: #219a52; }
+    #overlay .overlay-btn.secondary {
+      background: #4a90d9;
+      margin-left: 8px;
+    }
+    #overlay .overlay-btn.secondary:hover { background: #3a7bc8; }
+    #overlay .tip {
+      margin-top: 20px;
+      padding: 12px 20px;
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 8px;
+      color: #856404;
+      font-size: 12px;
+      max-width: 460px;
+    }
 
     /* Branding footer */
     #branding {
@@ -195,6 +257,7 @@
       transform: translate(-50%, -50%);
       z-index: 60;
       display: none;
+      text-align: center;
     }
     #loading.active { display: block; }
     .spinner {
@@ -203,6 +266,11 @@
       border-top-color: #4a90d9;
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
+      margin: 0 auto 12px;
+    }
+    #loading .loading-text {
+      font-size: 12px;
+      color: #999;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
   </style>
@@ -215,11 +283,15 @@
     <span class="icon">🌐</span>
     <input id="urlInput" type="text" placeholder="Enter website URL (e.g. https://example.com)" />
     <button class="btn btn-primary" onclick="loadUrl()">Load</button>
+    <button id="btnOpenWindow" class="btn btn-window" onclick="openInDialog()" title="Open in browser window" style="display:none;">Window</button>
     <button class="btn btn-hide" onclick="toggleControls()" title="Hide controls">✕</button>
   </div>
 
   <!-- Show controls button -->
   <button id="toggleBtn" onclick="toggleControls()" title="Show controls">⚙</button>
+
+  <!-- Environment badge -->
+  <div id="envBadge"></div>
 
   <!-- Welcome overlay -->
   <div id="overlay">
@@ -245,10 +317,13 @@
   </div>
 
   <!-- Loading indicator -->
-  <div id="loading"><div class="spinner"></div></div>
+  <div id="loading">
+    <div class="spinner"></div>
+    <div class="loading-text">Loading website...</div>
+  </div>
 
   <!-- Website frame -->
-  <iframe id="webFrame" src="" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+  <iframe id="webFrame" src="" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation"></iframe>
 
   <script>
     const urlInput = document.getElementById('urlInput');
@@ -258,10 +333,40 @@
     const config = document.getElementById('config');
     const toggleBtn = document.getElementById('toggleBtn');
     const branding = document.getElementById('branding');
+    const envBadge = document.getElementById('envBadge');
+    const btnOpenWindow = document.getElementById('btnOpenWindow');
 
     let controlsVisible = true;
+    let isOnline = false;        // true if running in PowerPoint Online
+    let officeReady = false;
+    let currentUrl = '';
+    let loadTimeoutId = null;
+    let iframeLoadFailed = false;
 
-    // Normalize URL: add https:// if no protocol specified
+    // ─── Detect environment ───────────────────────────────
+    function detectEnvironment() {
+      try {
+        // Office.context.platform: 'OfficeOnline', 'PC', 'Mac', 'iOS', 'Android'
+        const platform = Office.context.platform;
+        if (platform === Office.PlatformType.OfficeOnline) {
+          isOnline = true;
+          envBadge.textContent = 'POWERPOINT ONLINE';
+          envBadge.className = 'online';
+          // Show the "Window" button for Online users
+          btnOpenWindow.style.display = '';
+        } else {
+          isOnline = false;
+          envBadge.textContent = 'DESKTOP';
+          envBadge.className = 'desktop';
+        }
+      } catch (e) {
+        // If Office API not available, assume standalone/testing
+        envBadge.textContent = 'STANDALONE';
+        envBadge.className = 'desktop';
+      }
+    }
+
+    // ─── Normalize URL ────────────────────────────────────
     function normalizeUrl(url) {
       url = url.trim();
       if (!url) return '';
@@ -271,7 +376,7 @@
       return url;
     }
 
-    // Validate URL format
+    // ─── Validate URL ─────────────────────────────────────
     function isValidUrl(str) {
       try {
         new URL(str);
@@ -281,117 +386,239 @@
       }
     }
 
-    // Show error in overlay
-    function showError(title, message) {
+    // ─── Show error in overlay ────────────────────────────
+    function showError(title, message, showButtons) {
       overlay.classList.remove('hidden');
-      overlay.innerHTML = `
-        <div class="emoji">⚠️</div>
-        <h2>${title}</h2>
-        <p>${message}</p>
-      `;
+      let html = '<div class="emoji">⚠️</div>';
+      html += '<h2>' + title + '</h2>';
+      html += '<p>' + message + '</p>';
+
+      if (showButtons && currentUrl) {
+        html += '<div style="margin-top: 16px;">';
+        html += '<button class="overlay-btn" onclick="openInDialog()">Open in Window</button>';
+        html += '<button class="overlay-btn secondary" onclick="retryLoad()">Retry in Frame</button>';
+        html += '</div>';
+        if (isOnline) {
+          html += '<div class="tip"><strong>Tip:</strong> In PowerPoint Online, many websites block being embedded in frames. Use <strong>"Open in Window"</strong> to view the site in a separate browser window, or try <strong>"Window"</strong> button in the toolbar.</div>';
+        }
+      }
+
+      overlay.innerHTML = html;
       loading.classList.remove('active');
     }
 
-    // Show welcome screen
+    // ─── Show welcome screen ──────────────────────────────
     function showWelcome() {
       overlay.classList.remove('hidden');
-      overlay.innerHTML = `
-        <div class="emoji">🌐</div>
-        <h2>Live Website Viewer</h2>
-        <p>Enter a website URL above and click <strong>Load</strong> to display it inside this slide.</p>
-        <div style="margin-top: 24px; opacity: 0.5; font-size: 12px; color: #999;">
-          Created by <strong>Pedro Hernandez</strong> &mdash; PeopleWorks Services
-        </div>
-      `;
+      let html = '<div class="emoji">🌐</div>';
+      html += '<h2>Live Website Viewer</h2>';
+      html += '<p>Enter a website URL above and click <strong>Load</strong> to display it inside this slide.</p>';
+
+      if (isOnline) {
+        html += '<div class="tip" style="margin-top: 16px;"><strong>PowerPoint Online detected:</strong> Some websites may not display inside the frame. If a site does not load, use the <strong>"Window"</strong> button to open it in a separate browser window.</div>';
+      }
+
+      html += '<div style="margin-top: 24px; opacity: 0.5; font-size: 12px; color: #999;">';
+      html += 'Created by <strong>Pedro Hernandez</strong> &mdash; PeopleWorks Services';
+      html += '</div>';
+      overlay.innerHTML = html;
     }
 
-    // Toggle controls visibility (for presentation mode)
+    // ─── Toggle controls ──────────────────────────────────
     function toggleControls() {
       controlsVisible = !controlsVisible;
       if (controlsVisible) {
         config.classList.remove('hidden');
         toggleBtn.classList.remove('visible');
+        envBadge.classList.remove('hidden');
       } else {
         config.classList.add('hidden');
         toggleBtn.classList.add('visible');
+        envBadge.classList.add('hidden');
       }
     }
 
-    // Load URL into iframe
+    // ─── Open URL using Office Dialog API ─────────────────
+    function openInDialog() {
+      let url = currentUrl || normalizeUrl(urlInput.value);
+      if (!url) {
+        showError('Empty URL', 'Please enter a website URL first.', false);
+        return;
+      }
+
+      // Try Office Dialog API first (works great in Online)
+      try {
+        if (officeReady && Office.context.ui) {
+          Office.context.ui.displayDialogAsync(url, {
+            width: 80,
+            height: 80,
+            promptBeforeOpen: false
+          }, function (result) {
+            if (result.status === Office.AsyncResultStatus.Failed) {
+              // Fallback: open in new tab
+              window.open(url, '_blank');
+            }
+          });
+          return;
+        }
+      } catch (e) {
+        console.log('Dialog API not available:', e);
+      }
+
+      // Fallback: open in new tab
+      window.open(url, '_blank');
+    }
+
+    // ─── Retry loading in iframe ──────────────────────────
+    function retryLoad() {
+      if (currentUrl) {
+        overlay.classList.add('hidden');
+        loading.classList.add('active');
+        iframeLoadFailed = false;
+        webFrame.src = currentUrl;
+        startLoadTimeout();
+      }
+    }
+
+    // ─── Load timeout detection ───────────────────────────
+    function startLoadTimeout() {
+      clearTimeout(loadTimeoutId);
+      iframeLoadFailed = false;
+
+      loadTimeoutId = setTimeout(function () {
+        // If loading indicator is still active after timeout, iframe probably failed
+        if (loading.classList.contains('active')) {
+          iframeLoadFailed = true;
+          showError(
+            'Website did not load',
+            'The website is taking too long or may be blocking embedded display.' +
+            (isOnline ? ' This is common in PowerPoint Online.' : ''),
+            true
+          );
+        }
+      }, isOnline ? 8000 : 15000); // Shorter timeout for Online since it's more likely to fail
+    }
+
+    // ─── Save URL to Office settings ──────────────────────
+    function saveUrl(url) {
+      try {
+        if (officeReady) {
+          Office.context.document.settings.set('webViewerUrl', url);
+          Office.context.document.settings.saveAsync();
+        }
+      } catch (e) {
+        console.log('Could not save URL:', e);
+      }
+    }
+
+    // ─── Load URL into iframe ─────────────────────────────
     function loadUrl() {
       let url = normalizeUrl(urlInput.value);
 
       if (!url) {
-        showError('Empty URL', 'Please enter a website URL to load.');
+        showError('Empty URL', 'Please enter a website URL to load.', false);
         return;
       }
 
       if (!isValidUrl(url)) {
-        showError('Invalid URL', 'The URL you entered is not valid. Please check it and try again.');
+        showError('Invalid URL', 'The URL you entered is not valid. Please check it and try again.', false);
         return;
       }
 
       // Update input with normalized URL
       urlInput.value = url;
+      currentUrl = url;
 
       // Show loading, hide branding
       overlay.classList.add('hidden');
       branding.classList.add('hidden');
       loading.classList.add('active');
+      iframeLoadFailed = false;
 
       // Set iframe src
       webFrame.src = url;
 
-      // Save URL to slide via Office API
-      try {
-        Office.context.document.settings.set('webViewerUrl', url);
-        Office.context.document.settings.saveAsync();
-      } catch (e) {
-        console.log('Office API not available (standalone mode):', e);
-      }
+      // Start load timeout detection
+      startLoadTimeout();
+
+      // Save URL
+      saveUrl(url);
     }
 
-    // Handle iframe load events
+    // ─── Handle iframe load events ────────────────────────
     webFrame.addEventListener('load', function () {
+      clearTimeout(loadTimeoutId);
       loading.classList.remove('active');
-      if (webFrame.src && webFrame.src !== 'about:blank') {
+
+      if (webFrame.src && webFrame.src !== 'about:blank' && webFrame.src !== '') {
+        // Check if iframe actually loaded content (blank page detection)
+        try {
+          // Try to access iframe document - if blocked by CORS, it loaded something
+          var doc = webFrame.contentDocument;
+          if (doc && doc.body) {
+            var bodyContent = doc.body.innerHTML;
+            // If body is completely empty, the site might have blocked loading
+            if (!bodyContent || bodyContent.trim() === '') {
+              showError(
+                'Website appears blank',
+                'The website loaded but shows no content. It may be blocking embedded display.',
+                true
+              );
+              return;
+            }
+          }
+        } catch (e) {
+          // CORS error = the site actually loaded (different origin)
+          // This is the GOOD case - site loaded from a different domain
+        }
         overlay.classList.add('hidden');
       }
     });
 
-    // Handle iframe errors
+    // ─── Handle iframe errors ─────────────────────────────
     webFrame.addEventListener('error', function () {
+      clearTimeout(loadTimeoutId);
       loading.classList.remove('active');
+      iframeLoadFailed = true;
       showError(
         'Could not load website',
-        'This website may block being embedded in iframes. Try a different URL or check your internet connection.'
+        'This website may block being embedded in frames, or there may be a connection issue.',
+        true
       );
     });
 
-    // Timeout for iframe loading (10 seconds)
-    let loadTimeout;
-    const originalLoadUrl = loadUrl;
-
-    // Allow Enter key to trigger load
+    // ─── Enter key to load ────────────────────────────────
     urlInput.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') {
         loadUrl();
       }
     });
 
-    // Initialize with Office.js
+    // ─── Initialize with Office.js ────────────────────────
     Office.onReady(function () {
+      officeReady = true;
+
+      // Detect environment
+      detectEnvironment();
+
+      // Update welcome screen with environment-specific tips
+      if (!currentUrl) {
+        showWelcome();
+      }
+
       // Try to load saved URL for this slide
       try {
-        const savedUrl = Office.context.document.settings.get('webViewerUrl');
+        var savedUrl = Office.context.document.settings.get('webViewerUrl');
         if (savedUrl) {
           urlInput.value = savedUrl;
+          currentUrl = savedUrl;
           overlay.classList.add('hidden');
           loading.classList.add('active');
           webFrame.src = savedUrl;
+          startLoadTimeout();
         }
       } catch (e) {
-        console.log('Office API not available:', e);
+        console.log('Could not load saved URL:', e);
       }
     });
   </script>
