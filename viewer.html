@@ -323,7 +323,7 @@
   </div>
 
   <!-- Website frame -->
-  <iframe id="webFrame" src="" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation"></iframe>
+  <iframe id="webFrame" src="" sandbox="allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation"></iframe>
 
   <script>
     const urlInput = document.getElementById('urlInput');
@@ -431,10 +431,13 @@
         config.classList.remove('hidden');
         toggleBtn.classList.remove('visible');
         envBadge.classList.remove('hidden');
+        // Show branding only if no website is loaded
+        if (!currentUrl) branding.classList.remove('hidden');
       } else {
         config.classList.add('hidden');
         toggleBtn.classList.add('visible');
         envBadge.classList.add('hidden');
+        branding.classList.add('hidden');
       }
     }
 
@@ -502,12 +505,12 @@
     // ─── Save URL to Office settings ──────────────────────
     function saveUrl(url) {
       try {
-        if (officeReady) {
+        if (officeReady && Office.context && Office.context.document && Office.context.document.settings) {
           Office.context.document.settings.set('webViewerUrl', url);
           Office.context.document.settings.saveAsync();
         }
       } catch (e) {
-        console.log('Could not save URL:', e);
+        // Silent: Office API not available (standalone/testing mode)
       }
     }
 
@@ -572,6 +575,7 @@
           // This is the GOOD case - site loaded from a different domain
         }
         overlay.classList.add('hidden');
+        branding.classList.add('hidden');
       }
     });
 
@@ -608,17 +612,20 @@
 
       // Try to load saved URL for this slide
       try {
-        var savedUrl = Office.context.document.settings.get('webViewerUrl');
-        if (savedUrl) {
-          urlInput.value = savedUrl;
-          currentUrl = savedUrl;
-          overlay.classList.add('hidden');
-          loading.classList.add('active');
-          webFrame.src = savedUrl;
-          startLoadTimeout();
+        if (Office.context && Office.context.document && Office.context.document.settings) {
+          var savedUrl = Office.context.document.settings.get('webViewerUrl');
+          if (savedUrl) {
+            urlInput.value = savedUrl;
+            currentUrl = savedUrl;
+            overlay.classList.add('hidden');
+            branding.classList.add('hidden');
+            loading.classList.add('active');
+            webFrame.src = savedUrl;
+            startLoadTimeout();
+          }
         }
       } catch (e) {
-        console.log('Could not load saved URL:', e);
+        // Silent: Office API not available (standalone/testing mode)
       }
     });
   </script>
