@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="356" viewBox="0 0 900 356" role="img" aria-labelledby="embed-t embed-d">
+  <title id="embed-t">Por qué algunos sitios no aparecen</title>
+  <desc id="embed-d">Los sitios que permiten marcos se muestran en vivo. Los que envían X-Frame-Options o frame-ancestors son bloqueados por el navegador; el complemento ofrece abrirlos en una ventana aparte.</desc>
+  <style>
+    text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .mono { font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace; }
+    .cap { font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+           font-size: 11px; letter-spacing: .12em; text-transform: uppercase; fill: #5b6673; }
+    .title { font-size: 15px; font-weight: 640; fill: #12171d; }
+    .body { font-size: 12.5px; fill: #5b6673; }
+    .small { font-size: 11.5px; fill: #5b6673; }
+  </style>
+  <defs>
+    <marker id="embed-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6b7684"/>
+    </marker>
+    <marker id="embed-arrow-ok" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1e8a4c"/>
+    </marker>
+    <marker id="embed-arrow-accent" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2c6cb0"/>
+    </marker>
+    <marker id="embed-arrow-bad" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b42318"/>
+    </marker>
+  </defs>
+  <rect width="900" height="356" fill="#ffffff"/>
+  <text class="cap" x="450" y="30" text-anchor="middle">Quien decide es el sitio, no el complemento</text>
+  <rect x="15" y="52" width="266" height="100" rx="12" fill="#f4f6f9" stroke="#d8dee6"/>
+  <text class="title" x="37" y="94">Permite marcos</text>
+  <text class="small" x="37" y="116">sin restricción de frames</text>
+  <rect x="317" y="52" width="266" height="100" rx="12" fill="rgba(30,138,76,.08)" stroke="#1e8a4c"/>
+  <circle cx="353" cy="102" r="13" fill="none" stroke="#1e8a4c" stroke-width="2"/>
+  <path d="M347,102 l4.5,5 L360,96" fill="none" stroke="#1e8a4c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text class="title" x="377" y="107">Se muestra en vivo</text>
+  <text class="cap" x="641" y="88">Por ejemplo</text>
+  <text class="body" x="641" y="112">Wikipedia, documentación,</text>
+  <text class="body" x="641" y="131">dashboards, Grafana, videos.</text>
+  <path d="M285,102 L311,102" stroke="#1e8a4c" stroke-width="1.8" fill="none" marker-end="url(#embed-arrow-ok)"/>
+  <rect x="15" y="176" width="266" height="100" rx="12" fill="#f4f6f9" stroke="#d8dee6"/>
+  <text class="title" x="37" y="218">Rechaza marcos</text>
+  <text class="small mono" x="37" y="240">X-Frame-Options · frame-ancestors</text>
+  <rect x="317" y="176" width="266" height="100" rx="12" fill="rgba(180,35,24,.06)" stroke="#b42318"/>
+  <circle cx="353" cy="226" r="13" fill="none" stroke="#b42318" stroke-width="2"/>
+  <path d="M348,221 l10,10 M358,221 l-10,10" stroke="#b42318" stroke-width="2.2" stroke-linecap="round"/>
+  <text class="title" x="377" y="222">El navegador lo bloquea</text>
+  <text class="small" x="377" y="242">&quot;rechazó la conexión&quot;</text>
+  <rect x="619" y="176" width="266" height="100" rx="12" fill="rgba(44,108,176,.08)" stroke="#2c6cb0" stroke-width="1.6"/>
+  <text class="title" x="641" y="210">Se ofrece una ventana</text>
+  <rect x="641" y="224" width="222" height="38" rx="19" fill="#ffffff" stroke="#d8dee6"/>
+  <text class="small" x="752" y="247" text-anchor="middle">&quot;Site not showing? Open in window&quot;</text>
+  <path d="M285,226 L311,226" stroke="#b42318" stroke-width="1.8" fill="none" marker-end="url(#embed-arrow-bad)"/>
+  <path d="M587,226 L613,226" stroke="#2c6cb0" stroke-width="1.8" fill="none" marker-end="url(#embed-arrow-accent)"/>
+  <line x1="15" y1="304" x2="885" y2="304" stroke="#d8dee6"/>
+  <text class="body" x="450" y="332" text-anchor="middle">El navegador no le dice al complemento cuál caso ocurrió, por eso el atajo aparece brevemente después de cada carga.</text>
+
+</svg>

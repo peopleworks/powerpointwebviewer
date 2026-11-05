@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="420" viewBox="0 0 1000 420" role="img" aria-labelledby="cover-t cover-d">
+  <title id="cover-t">Live Website Viewer para PowerPoint</title>
+  <desc id="cover-d">Sitios web, dashboards y videos en vivo dentro de diapositivas de PowerPoint.</desc>
+  <style>
+    text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .mono { font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace; }
+    .cap  { font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace; letter-spacing: .13em; }
+    .head { font-weight: 640; letter-spacing: -.015em; }
+  </style>
+  <defs>
+    <pattern id="grid" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#f2f5f8" opacity=".04"/>
+    </pattern>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4a90d9"/><stop offset="1" stop-color="#2c6cb0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="420" fill="#0a0d12"/>
+  <rect width="1000" height="420" fill="url(#grid)"/>
+
+  <text class="cap" x="56" y="58" style="fill:#64707e;font-size:11.5px">LIVE WEBSITE VIEWER  ·  COMPLEMENTO DE POWERPOINT  ·  MIT</text>
+  <text class="head" x="56" y="138" style="fill:#e8edf3;font-size:38px">Sitios web en vivo,</text>
+  <text class="head" x="56" y="186" style="fill:#63b3ed;font-size:38px">en tus diapositivas.</text>
+  <text x="56" y="252" style="fill:#8794a4;font-size:16px">Dashboards, documentación y videos en vivo</text>
+  <text x="56" y="276" style="fill:#8794a4;font-size:16px">durante la presentación. Sin capturas.</text>
+  <rect x="56" y="318" width="153.8" height="30" rx="15" fill="none" stroke="#2b3542"/>
+  <text x="132.9" y="338" text-anchor="middle" style="fill:#aab6c4;font-size:12.5px">PowerPoint Online</text>
+  <rect x="219.8" y="318" width="79.80000000000001" height="30" rx="15" fill="none" stroke="#2b3542"/>
+  <text x="259.70000000000005" y="338" text-anchor="middle" style="fill:#aab6c4;font-size:12.5px">Desktop</text>
+  <rect x="309.6" y="318" width="139" height="30" rx="15" fill="none" stroke="#2b3542"/>
+  <text x="379.1" y="338" text-anchor="middle" style="fill:#aab6c4;font-size:12.5px">YouTube y Vimeo</text>
+
+  <!-- Slide with the add-in -->
+  <rect x="586" y="50" width="388" height="316" rx="10" fill="#141a22" stroke="#232b36"/>
+  <text x="600" y="356" style="fill:#64707e;font-size:11px" class="mono">Diapositiva 3 · Resultados T3</text>
+  <rect x="600" y="64" width="360" height="270" rx="4" fill="url(#blue)"/>
+  <rect x="608" y="72" width="344" height="254" rx="3" fill="#f0f2f5"/>
+  <!-- Toolbar -->
+  <rect x="616" y="80" width="328" height="30" rx="8" fill="#ffffff"/>
+  <rect x="626" y="86" width="190" height="18" rx="5" fill="#ffffff" stroke="#e0e0e0"/>
+  <text x="632" y="99" class="mono" style="fill:#555;font-size:9.5px">https://dashboard.example.com</text>
+  <rect x="822" y="86" width="36" height="18" rx="5" fill="#4a90d9"/>
+  <text x="840" y="99" text-anchor="middle" style="fill:#fff;font-size:9px;font-weight:600">Load</text>
+  <rect x="863" y="86" width="18" height="18" rx="5" fill="#e8e8e8"/>
+  <rect x="885" y="86" width="40" height="18" rx="5" fill="#27ae60"/>
+  <text x="905" y="99" text-anchor="middle" style="fill:#fff;font-size:8.5px;font-weight:600">Window</text>
+  <!-- Website -->
+  <rect x="616" y="118" width="328" height="200" rx="4" fill="#ffffff"/>
+  <rect x="628" y="130" width="90" height="34" rx="4" fill="#eef4fb"/>
+  <rect x="726" y="130" width="90" height="34" rx="4" fill="#eef4fb"/>
+  <rect x="824" y="130" width="108" height="34" rx="4" fill="#eaf7ef"/>
+  <rect x="636" y="138" width="40" height="6" rx="2" fill="#9fb3c8"/>
+  <rect x="636" y="150" width="56" height="8" rx="2" fill="#2c6cb0"/>
+  <rect x="734" y="138" width="40" height="6" rx="2" fill="#9fb3c8"/>
+  <rect x="734" y="150" width="48" height="8" rx="2" fill="#2c6cb0"/>
+  <rect x="832" y="138" width="40" height="6" rx="2" fill="#9fb3c8"/>
+  <rect x="832" y="150" width="60" height="8" rx="2" fill="#1e8a4c"/>
+  <rect x="634" y="246" width="18" height="48" rx="3" fill="#c9d7e8"/>
+  <rect x="667" y="224" width="18" height="70" rx="3" fill="#c9d7e8"/>
+  <rect x="700" y="234" width="18" height="60" rx="3" fill="#c9d7e8"/>
+  <rect x="733" y="208" width="18" height="86" rx="3" fill="#c9d7e8"/>
+  <rect x="766" y="218" width="18" height="76" rx="3" fill="#c9d7e8"/>
+  <rect x="799" y="196" width="18" height="98" rx="3" fill="#c9d7e8"/>
+  <rect x="832" y="204" width="18" height="90" rx="3" fill="#c9d7e8"/>
+  <rect x="865" y="186" width="18" height="108" rx="3" fill="#c9d7e8"/>
+  <rect x="898" y="174" width="18" height="120" rx="3" fill="#4a90d9"/>
+  <!-- Live dot -->
+  <circle cx="930" cy="306" r="5" fill="#e53935"/>
+  <text x="920" y="310" text-anchor="end" class="mono" style="fill:#e53935;font-size:10px;font-weight:700">LIVE</text>
+</svg>
