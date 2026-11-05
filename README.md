@@ -8,13 +8,14 @@ Embed live, interactive websites directly inside your PowerPoint presentations. 
 
 ## Features
 
-- **Live websites inside slides** - Display any website directly in PowerPoint
+- **Live websites inside slides** - Display websites that allow embedding directly in PowerPoint; sites that block it can be opened in a separate window
 - **Video support** - Embedded video plays (autoplay, fullscreen, DRM); YouTube & Vimeo links are auto-converted to their embeddable player
 - **Per-slide URLs** - Each slide remembers its own URL
 - **Presentation mode** - Hide/show controls, reload, or go fullscreen from the toolbar
 - **Smart URL handling** - Auto-adds `https://` if you forget the protocol
-- **Error handling** - Friendly messages when a site can't be embedded
-- **Zero dependencies** - Just HTML, JS, and an XML manifest
+- **Error handling** - Friendly messages, plus a "Site not showing? Open in window" shortcut when a site refuses to be embedded
+- **Safe by default** - Only `http://` and `https://` links are opened, including links saved inside a presentation file
+- **Zero dependencies** - Just HTML, a small JS file, and an XML manifest
 
 ## Quick Start
 
@@ -62,7 +63,7 @@ The viewer is hosted at `https://powerpointwebviewer.peopleworksservices.com/vie
 ### Option C: Self-host
 
 1. Clone this repository
-2. Host `viewer.html` on your own HTTPS server
+2. Host `viewer.html`, `url-tools.js`, `dialog.html` and the `icon-*.png` files on your own HTTPS server (same folder)
 3. Edit `manifest.xml` and update the `SourceLocation` URL to point to your server
 4. Follow Option A or B to load the modified manifest
 
@@ -71,17 +72,22 @@ The viewer is hosted at `https://powerpointwebviewer.peopleworksservices.com/vie
 | File | Description |
 |------|-------------|
 | `viewer.html` | The add-in that runs inside PowerPoint slides |
+| `url-tools.js` | URL safety check + YouTube/Vimeo link conversion (used by `viewer.html` and `dialog.html`) |
+| `dialog.html` | Small bridge page used by the **Window** button to open a site in a separate window |
 | `manifest.xml` | Office Add-in manifest (registers the add-in with PowerPoint) |
+| `icon-32.png`, `icon-64.png`, `icon-80.png`, `icon-128.png` | Add-in icons (generated from `icon.svg`) |
 | `powerpointwebviewer.html` | Documentation page (English/Spanish) |
 | `web.config` | IIS configuration for Windows Server hosting |
+| `tests/` | Unit tests — run with `node --test tests/url-tools.test.js` |
+| `CHANGELOG.md` | Version history |
 
 ## How It Works
 
 The add-in uses Microsoft's [Office.js](https://learn.microsoft.com/en-us/office/dev/add-ins/) API to:
 
 1. Load a lightweight HTML page inside a PowerPoint content add-in
-2. Accept a URL from the user
-3. Display the website in an iframe
+2. Accept a URL from the user and check it is a normal `http(s)://` website
+3. Display the website in an iframe (YouTube/Vimeo links are converted to their embeddable player)
 4. Persist the URL using `Office.context.document.settings` so it's saved with the presentation
 
 ## Customization Guide
@@ -93,7 +99,8 @@ Want to host your own version or personalize it? Here's everything you need to c
 Edit `manifest.xml` and update these two lines with your server address:
 
 ```xml
-<IconUrl DefaultValue="https://YOUR-DOMAIN.com/icon.png"/>
+<IconUrl DefaultValue="https://YOUR-DOMAIN.com/icon-32.png"/>
+<HighResolutionIconUrl DefaultValue="https://YOUR-DOMAIN.com/icon-64.png"/>
 <SupportUrl DefaultValue="https://YOUR-DOMAIN.com/support"/>
 
 <SourceLocation DefaultValue="https://YOUR-DOMAIN.com/viewer.html"/>
@@ -112,6 +119,8 @@ In `manifest.xml`, generate a new unique ID and update the provider name:
 ```
 
 > You can generate a GUID at [guidgenerator.com](https://www.guidgenerator.com/)
+>
+> Choose your GUID once and never change it afterwards: presentations that already use your add-in reference it by this Id.
 
 ### 3. Customize the branding
 
@@ -132,19 +141,12 @@ In `viewer.html`, find the **branding footer** near the bottom of the `<body>` a
 </div>
 ```
 
-Also update the **welcome screen** in the same file:
+Also update the **welcome screen**, which is built by the `showWelcome()` function in the `<script>` section:
 
-```html
-<!-- Welcome overlay -->
-<div id="overlay">
-  ...
-  <div style="margin-top: 24px; opacity: 0.5; font-size: 12px; color: #999;">
-    Created by <strong>Your Name</strong> &mdash; Your Company
-  </div>
-</div>
+```js
+var credit = make('div', 'credit');
+credit.innerHTML = 'Created by <strong>Your Name</strong> &mdash; Your Company &middot; v' + APP_VERSION;
 ```
-
-And the `showWelcome()` function in the `<script>` section — it has the same text.
 
 ### 4. Change the colors
 
@@ -160,8 +162,8 @@ In `viewer.html`, the main colors are defined in the CSS:
 ### 5. Deploy on your own server
 
 **IIS (Windows Server):**
-- Copy `viewer.html`, `manifest.xml`, and `web.config` to your site folder
-- The included `web.config` handles CORS, HTTPS redirect, and MIME types
+- Copy `viewer.html`, `url-tools.js`, `dialog.html`, the `icon-*.png` files, `manifest.xml`, and `web.config` to your site folder
+- The included `web.config` handles HTTPS redirect, MIME types and basic headers
 - Make sure you have a valid SSL certificate (Office Add-ins require HTTPS)
 - Install the [URL Rewrite](https://www.iis.net/downloads/microsoft/url-rewrite) module if not already installed
 
@@ -211,6 +213,8 @@ server {
 - Some websites block iframe embedding (e.g., Google, Facebook, X/Twitter) via `X-Frame-Options` or CSP headers — use the **Window** button to open those in a separate window
 - YouTube and Vimeo **video links are auto-converted** to their embeddable player so they display correctly; other video pages depend on the site's own embedding policy
 - The viewer requires an internet connection to load websites
+- Browsers don't report when a site refuses to be embedded, so the viewer can't always tell; that's why it briefly shows a **"Site not showing? Open in window"** shortcut after each page loads
+- The URL is saved inside the presentation file — don't use links that contain passwords or private tokens
 
 ## Contributing
 
@@ -218,7 +222,7 @@ Contributions are welcome! Feel free to open issues or submit pull requests.
 
 ## License
 
-MIT License - Free to use, modify, and distribute.
+MIT License - Free to use, modify, and distribute. See [`LICENSE`](LICENSE).
 
 ## Author
 

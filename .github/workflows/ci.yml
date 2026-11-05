@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Unit tests (URL safety + YouTube/Vimeo conversion)
+        run: node --test tests/url-tools.test.js
+
+      - name: Check XML files are well-formed
+        run: |
+          python3 -c "import xml.etree.ElementTree as ET; [ET.parse(f) for f in ['manifest.xml', 'web.config']]; print('XML OK')"
+
+      - name: Check the version matches in manifest.xml and viewer.html
+        run: |
+          manifest=$(grep -oP '(?<=<Version>)[0-9.]+(?=\.0</Version>)' manifest.xml)
+          viewer=$(grep -oP "(?<=APP_VERSION = ')[0-9.]+(?=')" viewer.html)
+          echo "manifest.xml: $manifest   viewer.html: $viewer"
+          test "$manifest" = "$viewer"

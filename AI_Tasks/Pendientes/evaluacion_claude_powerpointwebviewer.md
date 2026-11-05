@@ -1,5 +1,7 @@
 # Evaluación de `powerpointwebviewer` y del informe de Copilot
 
+> **Estado (5 nov 2026):** la Fase 1 quedó implementada en la versión **1.4.0** (ver `CHANGELOG.md`). Pendientes: Fase 2 y Fase 3, mover los `.docx` de la raíz y verificar todo en PowerPoint real.
+
 **Fecha:** 5 de noviembre de 2026
 **Base revisada:** rama `main`, commit `3cb9514` (v1.3.0)
 **Método:** lectura completa de `viewer.html`, `manifest.xml`, `web.config`, README y página de documentación; pruebas en Chromium (Playwright) con un Office.js simulado. No se pudo acceder al servidor de producción desde el entorno de pruebas, así que lo relativo a `icon.png` y `/support` queda por verificar.
@@ -54,9 +56,9 @@ Cuando un sitio envía `X-Frame-Options` o `frame-ancestors`, el navegador **sí
 
 Permite que el sitio incrustado navegue el marco superior. Los sitios con "frame-busting" (`top.location = self.location`) pueden reemplazar el add-in completo. Ningún reproductor de video lo necesita. Recomendación: quitarlo.
 
-### P5. GUID de ejemplo en el manifiesto — **MEDIO**
+### P5. GUID de ejemplo en el manifiesto — **NO CAMBIAR** (corregido en la implementación)
 
-`<Id>e2b7c1a0-1234-5678-9abc-def012345678</Id>` es un GUID inventado. Antes de publicar en Microsoft Marketplace hay que usar uno real (generado una sola vez y que no vuelva a cambiar). El README pide a quien lo copie que genere el suyo, lo cual está bien.
+`<Id>e2b7c1a0-1234-5678-9abc-def012345678</Id>` parece inventado, pero **no debe cambiarse**: cada presentación que ya usa el add-in lo referencia por este Id, y al cambiarlo esas diapositivas dejarían de encontrarlo. Es único en la práctica, así que sirve también para Marketplace. En el manifiesto quedó un comentario que lo explica.
 
 ### P6. Errores en la conversión de YouTube y Vimeo — **MEDIO, confirmado**
 
@@ -127,7 +129,7 @@ Para un add-in de un solo archivo cuyo atractivo en YouTube es *"mira qué fáci
 4. `dialog.html` como página puente para el botón "Window" (P3).
 5. Aviso "¿No se ve? Abrir en ventana" después de cargar (P2).
 6. Correcciones de YouTube y Vimeo (P6).
-7. Archivo `LICENSE`, `icon.png` y verificar `/support`.
+7. Archivo `LICENSE`, íconos PNG y `SupportUrl` funcional.
 
 → **Versión 1.4.0**, y sirve como video: *"Encontré una vulnerabilidad en mi propio add-in"*.
 
