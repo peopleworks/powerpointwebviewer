@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Q3 Sales Dashboard (demo)</title>
+  <!-- Fictional demo page, used only to take the README screenshots. -->
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f6f8fb; color: #1d2733; padding: 92px 22px 18px; }
+    header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+    h1 { font-size: 19px; font-weight: 650; }
+    .live { font-size: 11px; font-weight: 700; color: #e53935; letter-spacing: .08em; }
+    .live::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #e53935; margin-right: 6px; }
+    .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 12px; }
+    .kpi { background: #fff; border-radius: 10px; padding: 10px 12px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+    .kpi .label { font-size: 11px; color: #6b7684; }
+    .kpi .value { font-size: 20px; font-weight: 700; margin-top: 2px; }
+    .kpi .delta { font-size: 11px; color: #1e8a4c; font-weight: 600; }
+    .kpi .delta.down { color: #b42318; }
+    .grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 10px; }
+    .card { background: #fff; border-radius: 10px; padding: 10px 12px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+    .card h2 { font-size: 12px; color: #6b7684; font-weight: 600; margin-bottom: 6px; }
+    table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+    td { padding: 4px 0; border-bottom: 1px solid #eef1f5; }
+    td:last-child { text-align: right; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <header><h1>Q3 Sales Dashboard</h1><span class="live">LIVE</span></header>
+  <div class="kpis">
+    <div class="kpi"><div class="label">Revenue</div><div class="value">$1.28M</div><div class="delta">▲ 12.4%</div></div>
+    <div class="kpi"><div class="label">New customers</div><div class="value">342</div><div class="delta">▲ 8.1%</div></div>
+    <div class="kpi"><div class="label">Avg. deal</div><div class="value">$3,740</div><div class="delta">▲ 3.9%</div></div>
+    <div class="kpi"><div class="label">Churn</div><div class="value">2.1%</div><div class="delta down">▼ 0.4 pts</div></div>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h2>Monthly revenue</h2>
+      <svg viewBox="0 0 400 150" width="100%" height="150" aria-hidden="true">
+        <g fill="#c9d7e8">
+          <rect x="10" y="80" width="34" height="60" rx="4"/><rect x="58" y="62" width="34" height="78" rx="4"/>
+          <rect x="106" y="70" width="34" height="70" rx="4"/><rect x="154" y="48" width="34" height="92" rx="4"/>
+          <rect x="202" y="56" width="34" height="84" rx="4"/><rect x="250" y="36" width="34" height="104" rx="4"/>
+          <rect x="298" y="42" width="34" height="98" rx="4"/>
+        </g>
+        <rect x="346" y="18" width="34" height="122" rx="4" fill="#4a90d9"/>
+        <line x1="0" y1="140.5" x2="400" y2="140.5" stroke="#dfe5ec"/>
+      </svg>
+    </div>
+    <div class="card">
+      <h2>Top regions</h2>
+      <table>
+        <tr><td>North</td><td>$412K</td></tr>
+        <tr><td>Central</td><td>$356K</td></tr>
+        <tr><td>East</td><td>$289K</td></tr>
+        <tr><td>South</td><td>$161K</td></tr>
+        <tr><td>West</td><td>$62K</td></tr>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

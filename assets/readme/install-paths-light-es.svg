@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="372" viewBox="0 0 900 372" role="img" aria-labelledby="inst-t inst-d">
+  <title id="inst-t">Tres formas de instalarlo</title>
+  <desc id="inst-d">PowerPoint Online carga el manifiesto directamente. PowerPoint Desktop en Windows lo lee desde una carpeta compartida de confianza. El alojamiento propio copia los archivos a tu servidor HTTPS.</desc>
+  <style>
+    text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .mono { font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace; }
+    .cap { font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+           font-size: 11px; letter-spacing: .12em; text-transform: uppercase; fill: #5b6673; }
+    .title { font-size: 15px; font-weight: 640; fill: #12171d; }
+    .body { font-size: 12.5px; fill: #5b6673; }
+    .small { font-size: 11.5px; fill: #5b6673; }
+  </style>
+  <defs>
+    <marker id="inst-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6b7684"/>
+    </marker>
+    <marker id="inst-arrow-ok" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1e8a4c"/>
+    </marker>
+    <marker id="inst-arrow-accent" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2c6cb0"/>
+    </marker>
+    <marker id="inst-arrow-bad" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b42318"/>
+    </marker>
+  </defs>
+  <rect width="900" height="372" fill="#ffffff"/>
+  <text class="cap" x="450" y="30" text-anchor="middle">Elige la que corresponde a tu PowerPoint</text>
+  <rect x="15" y="52" width="266" height="304" rx="12" fill="rgba(44,108,176,.08)" stroke="#2c6cb0" stroke-width="1.6"/>
+  <text class="cap" x="37" y="82" style="fill:#2c6cb0">La más fácil</text>
+  <text class="title" x="37" y="110">PowerPoint Online</text>
+  <circle cx="48" cy="144" r="11" fill="#2c6cb0"/>
+  <text class="small" x="48" y="148" text-anchor="middle" style="fill:#ffffff;font-weight:700">1</text>
+  <text class="body" x="69" y="148">Descarga manifest.xml</text>
+  <circle cx="48" cy="182" r="11" fill="#2c6cb0"/>
+  <text class="small" x="48" y="186" text-anchor="middle" style="fill:#ffffff;font-weight:700">2</text>
+  <text class="body" x="69" y="186">Insertar → Complementos →</text>
+  <text class="body" x="69" y="204">Cargar mi complemento</text>
+  <circle cx="48" cy="238" r="11" fill="#2c6cb0"/>
+  <text class="small" x="48" y="242" text-anchor="middle" style="fill:#ffffff;font-weight:700">3</text>
+  <text class="body" x="69" y="242">Elige manifest.xml</text>
+  <circle cx="48" cy="276" r="11" fill="#2c6cb0"/>
+  <text class="small" x="48" y="280" text-anchor="middle" style="fill:#ffffff;font-weight:700">4</text>
+  <text class="body" x="69" y="280">Escribe una URL y Enter</text>
+  <rect x="317" y="52" width="266" height="304" rx="12" fill="#f4f6f9" stroke="#d8dee6"/>
+  <text class="cap" x="339" y="82">Carpeta compartida</text>
+  <text class="title" x="339" y="110">PowerPoint Desktop</text>
+  <circle cx="350" cy="144" r="11" fill="#6b7684"/>
+  <text class="small" x="350" y="148" text-anchor="middle" style="fill:#ffffff;font-weight:700">1</text>
+  <text class="body" x="371" y="148">Pon manifest.xml en una</text>
+  <text class="body" x="371" y="166">carpeta compartida</text>
+  <circle cx="350" cy="200" r="11" fill="#6b7684"/>
+  <text class="small" x="350" y="204" text-anchor="middle" style="fill:#ffffff;font-weight:700">2</text>
+  <text class="body" x="371" y="204">Centro de confianza →</text>
+  <text class="body" x="371" y="222">Catálogos de complementos</text>
+  <circle cx="350" cy="256" r="11" fill="#6b7684"/>
+  <text class="small" x="350" y="260" text-anchor="middle" style="fill:#ffffff;font-weight:700">3</text>
+  <text class="body" x="371" y="260">Agrega \\PC\carpeta y marca</text>
+  <text class="body" x="371" y="278">Mostrar en el menú</text>
+  <circle cx="350" cy="312" r="11" fill="#6b7684"/>
+  <text class="small" x="350" y="316" text-anchor="middle" style="fill:#ffffff;font-weight:700">4</text>
+  <text class="body" x="371" y="316">Reinicia → Complementos →</text>
+  <text class="body" x="371" y="334">Carpeta compartida</text>
+  <rect x="619" y="52" width="266" height="304" rx="12" fill="#f4f6f9" stroke="#d8dee6"/>
+  <text class="cap" x="641" y="82">Tu propio servidor</text>
+  <text class="title" x="641" y="110">Alojamiento propio</text>
+  <circle cx="652" cy="144" r="11" fill="#6b7684"/>
+  <text class="small" x="652" y="148" text-anchor="middle" style="fill:#ffffff;font-weight:700">1</text>
+  <text class="body" x="673" y="148">Copia los archivos a</text>
+  <text class="body" x="673" y="166">un sitio HTTPS</text>
+  <circle cx="652" cy="200" r="11" fill="#6b7684"/>
+  <text class="small" x="652" y="204" text-anchor="middle" style="fill:#ffffff;font-weight:700">2</text>
+  <text class="body" x="673" y="204">Apunta manifest.xml</text>
+  <text class="body" x="673" y="222">a tu URL</text>
+  <circle cx="652" cy="256" r="11" fill="#6b7684"/>
+  <text class="small" x="652" y="260" text-anchor="middle" style="fill:#ffffff;font-weight:700">3</text>
+  <text class="body" x="673" y="260">Cárgalo como en Online</text>
+  <text class="body" x="673" y="278">o Desktop</text>
+
+</svg>

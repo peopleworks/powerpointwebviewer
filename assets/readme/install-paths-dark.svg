@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="372" viewBox="0 0 900 372" role="img" aria-labelledby="inst-t inst-d">
+  <title id="inst-t">Three ways to install</title>
+  <desc id="inst-d">PowerPoint Online uploads the manifest directly. PowerPoint Desktop on Windows reads it from a trusted shared folder. Self-hosting copies the files to your own HTTPS server.</desc>
+  <style>
+    text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .mono { font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace; }
+    .cap { font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+           font-size: 11px; letter-spacing: .12em; text-transform: uppercase; fill: #8794a4; }
+    .title { font-size: 15px; font-weight: 640; fill: #e8edf3; }
+    .body { font-size: 12.5px; fill: #8794a4; }
+    .small { font-size: 11.5px; fill: #8794a4; }
+  </style>
+  <defs>
+    <marker id="inst-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#737f8f"/>
+    </marker>
+    <marker id="inst-arrow-ok" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4ade80"/>
+    </marker>
+    <marker id="inst-arrow-accent" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#63b3ed"/>
+    </marker>
+    <marker id="inst-arrow-bad" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f87171"/>
+    </marker>
+  </defs>
+  <rect width="900" height="372" fill="#0a0d12"/>
+  <text class="cap" x="450" y="30" text-anchor="middle">Pick the one that matches your PowerPoint</text>
+  <rect x="15" y="52" width="266" height="304" rx="12" fill="rgba(99,179,237,.10)" stroke="#63b3ed" stroke-width="1.6"/>
+  <text class="cap" x="37" y="82" style="fill:#63b3ed">Easiest</text>
+  <text class="title" x="37" y="110">PowerPoint Online</text>
+  <circle cx="48" cy="144" r="11" fill="#63b3ed"/>
+  <text class="small" x="48" y="148" text-anchor="middle" style="fill:#0a0d12;font-weight:700">1</text>
+  <text class="body" x="69" y="148">Download manifest.xml</text>
+  <circle cx="48" cy="182" r="11" fill="#63b3ed"/>
+  <text class="small" x="48" y="186" text-anchor="middle" style="fill:#0a0d12;font-weight:700">2</text>
+  <text class="body" x="69" y="186">Insert → Add-ins →</text>
+  <text class="body" x="69" y="204">Upload My Add-in</text>
+  <circle cx="48" cy="238" r="11" fill="#63b3ed"/>
+  <text class="small" x="48" y="242" text-anchor="middle" style="fill:#0a0d12;font-weight:700">3</text>
+  <text class="body" x="69" y="242">Choose manifest.xml</text>
+  <circle cx="48" cy="276" r="11" fill="#63b3ed"/>
+  <text class="small" x="48" y="280" text-anchor="middle" style="fill:#0a0d12;font-weight:700">4</text>
+  <text class="body" x="69" y="280">Type a URL, press Enter</text>
+  <rect x="317" y="52" width="266" height="304" rx="12" fill="#10151d" stroke="#232b36"/>
+  <text class="cap" x="339" y="82">Shared folder</text>
+  <text class="title" x="339" y="110">PowerPoint Desktop</text>
+  <circle cx="350" cy="144" r="11" fill="#737f8f"/>
+  <text class="small" x="350" y="148" text-anchor="middle" style="fill:#0a0d12;font-weight:700">1</text>
+  <text class="body" x="371" y="148">Put manifest.xml in a</text>
+  <text class="body" x="371" y="166">shared folder</text>
+  <circle cx="350" cy="200" r="11" fill="#737f8f"/>
+  <text class="small" x="350" y="204" text-anchor="middle" style="fill:#0a0d12;font-weight:700">2</text>
+  <text class="body" x="371" y="204">Trust Center → Trusted</text>
+  <text class="body" x="371" y="222">Add-in Catalogs</text>
+  <circle cx="350" cy="256" r="11" fill="#737f8f"/>
+  <text class="small" x="350" y="260" text-anchor="middle" style="fill:#0a0d12;font-weight:700">3</text>
+  <text class="body" x="371" y="260">Add \\PC\folder and tick</text>
+  <text class="body" x="371" y="278">Show in Menu</text>
+  <circle cx="350" cy="312" r="11" fill="#737f8f"/>
+  <text class="small" x="350" y="316" text-anchor="middle" style="fill:#0a0d12;font-weight:700">4</text>
+  <text class="body" x="371" y="316">Restart → Add-ins →</text>
+  <text class="body" x="371" y="334">Shared Folder</text>
+  <rect x="619" y="52" width="266" height="304" rx="12" fill="#10151d" stroke="#232b36"/>
+  <text class="cap" x="641" y="82">Your own server</text>
+  <text class="title" x="641" y="110">Self-host</text>
+  <circle cx="652" cy="144" r="11" fill="#737f8f"/>
+  <text class="small" x="652" y="148" text-anchor="middle" style="fill:#0a0d12;font-weight:700">1</text>
+  <text class="body" x="673" y="148">Copy the files to an</text>
+  <text class="body" x="673" y="166">HTTPS site</text>
+  <circle cx="652" cy="200" r="11" fill="#737f8f"/>
+  <text class="small" x="652" y="204" text-anchor="middle" style="fill:#0a0d12;font-weight:700">2</text>
+  <text class="body" x="673" y="204">Point manifest.xml</text>
+  <text class="body" x="673" y="222">to your URL</text>
+  <circle cx="652" cy="256" r="11" fill="#737f8f"/>
+  <text class="small" x="652" y="260" text-anchor="middle" style="fill:#0a0d12;font-weight:700">3</text>
+  <text class="body" x="673" y="260">Load it like Online</text>
+  <text class="body" x="673" y="278">or Desktop</text>
+
+</svg>

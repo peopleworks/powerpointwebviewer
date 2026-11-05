@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="410" viewBox="0 0 900 410" role="img" aria-labelledby="how-t how-d">
+  <title id="how-t">How the add-in works</title>
+  <desc id="how-d">A PowerPoint slide holds the add-in, Office loads viewer.html from your HTTPS host, and the website is shown live in a frame. Sites that refuse frames open in a separate window through dialog.html.</desc>
+  <style>
+    text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .mono { font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace; }
+    .cap { font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+           font-size: 11px; letter-spacing: .12em; text-transform: uppercase; fill: #8794a4; }
+    .title { font-size: 15px; font-weight: 640; fill: #e8edf3; }
+    .body { font-size: 12.5px; fill: #8794a4; }
+    .small { font-size: 11.5px; fill: #8794a4; }
+  </style>
+  <defs>
+    <marker id="how-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#737f8f"/>
+    </marker>
+    <marker id="how-arrow-ok" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4ade80"/>
+    </marker>
+    <marker id="how-arrow-accent" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#63b3ed"/>
+    </marker>
+    <marker id="how-arrow-bad" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f87171"/>
+    </marker>
+  </defs>
+  <rect width="900" height="410" fill="#0a0d12"/>
+  <text class="cap" x="450" y="30" text-anchor="middle">Three pieces · one live slide</text>
+  <rect x="15" y="52" width="266" height="178" rx="12" fill="#10151d" stroke="#232b36"/>
+  <text class="cap" x="37" y="84">1 · Your presentation</text>
+  <text class="title" x="37" y="112">A slide in the .pptx</text>
+  <text class="body" x="37" y="142">The add-in sits on the slide</text>
+  <text class="body" x="37" y="161">like a picture or a chart.</text>
+  <text class="body" x="37" y="180">It remembers its URL</text>
+  <text class="body" x="37" y="199">inside the file.</text>
+  <rect x="317" y="52" width="266" height="178" rx="12" fill="rgba(99,179,237,.10)" stroke="#63b3ed" stroke-width="1.6"/>
+  <text class="cap" x="339" y="84" style="fill:#63b3ed">2 · The add-in</text>
+  <text class="title mono" x="339" y="112">viewer.html</text>
+  <text class="body" x="339" y="142">Loaded by Office from</text>
+  <text class="body" x="339" y="161">your HTTPS host.</text>
+  <text class="body" x="339" y="180">Checks the URL and converts</text>
+  <text class="body" x="339" y="199">YouTube &amp; Vimeo links.</text>
+  <rect x="619" y="52" width="266" height="178" rx="12" fill="#10151d" stroke="#232b36"/>
+  <text class="cap" x="641" y="84">3 · The website</text>
+  <text class="title" x="641" y="112">Live, in a frame</text>
+  <text class="body" x="641" y="142">Scroll, click and play</text>
+  <text class="body" x="641" y="161">video during the show.</text>
+  <text class="body" x="641" y="180">Nothing is copied:</text>
+  <text class="body" x="641" y="199">it is the real site.</text>
+  <path d="M285,141 L311,141" stroke="#737f8f" stroke-width="1.8" fill="none" marker-end="url(#how-arrow)"/>
+  <path d="M587,141 L613,141" stroke="#737f8f" stroke-width="1.8" fill="none" marker-end="url(#how-arrow)"/>
+  <rect x="15" y="268" width="870" height="116" rx="12" fill="none" stroke="#232b36" stroke-dasharray="4 4"/>
+  <text class="cap" x="37" y="298">Site refuses to be framed?</text>
+  <rect x="37" y="316" width="200" height="50" rx="25" fill="#0a0d12" stroke="#4ade80" stroke-width="1.6"/>
+  <text class="title" x="137" y="346" text-anchor="middle">Window button</text>
+  <rect x="330" y="316" width="240" height="50" rx="25" fill="#0a0d12" stroke="#63b3ed" stroke-width="1.6"/>
+  <text class="title mono" x="450" y="338" text-anchor="middle">dialog.html</text>
+  <text class="small" x="450" y="355" text-anchor="middle">same domain as the add-in</text>
+  <rect x="663" y="316" width="200" height="50" rx="25" fill="#0a0d12" stroke="#4ade80" stroke-width="1.6"/>
+  <text class="title" x="763" y="346" text-anchor="middle">Site in its own window</text>
+  <path d="M241,341 L324,341" stroke="#4ade80" stroke-width="1.8" fill="none" marker-end="url(#how-arrow-ok)"/>
+  <path d="M574,341 L657,341" stroke="#4ade80" stroke-width="1.8" fill="none" marker-end="url(#how-arrow-ok)"/>
+  <path d="M450,232 L450,264" stroke="#737f8f" stroke-width="1.8" fill="none" stroke-dasharray="3 4" marker-end="url(#how-arrow)"/>
+
+</svg>

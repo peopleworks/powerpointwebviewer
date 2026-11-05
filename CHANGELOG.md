@@ -2,6 +2,14 @@
 
 All notable changes to Live Website Viewer for PowerPoint.
 
+## [Unreleased]
+
+### Documentation
+- New README with diagrams (light and dark themes), screenshots, a security section and troubleshooting.
+- Full Spanish README (`README.es.md`) with Spanish diagrams.
+- `CONTRIBUTING.md` and `SECURITY.md`.
+- `tools/readme-assets/`: scripts that regenerate the README diagrams and screenshots.
+
 ## [1.4.0] - 2026-11-05
 
 ### Security

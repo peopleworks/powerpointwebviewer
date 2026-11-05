@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="372" viewBox="0 0 900 372" role="img" aria-labelledby="url-t url-d">
+  <title id="url-t">Every URL passes the same check</title>
+  <desc id="url-d">URLs typed in the toolbar, saved inside the presentation, or opened with the Window button all go through safeUrl(). Anything that is not http or https is refused; accepted URLs are converted to an embed player for YouTube and Vimeo.</desc>
+  <style>
+    text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .mono { font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace; }
+    .cap { font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+           font-size: 11px; letter-spacing: .12em; text-transform: uppercase; fill: #5b6673; }
+    .title { font-size: 15px; font-weight: 640; fill: #12171d; }
+    .body { font-size: 12.5px; fill: #5b6673; }
+    .small { font-size: 11.5px; fill: #5b6673; }
+  </style>
+  <defs>
+    <marker id="url-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6b7684"/>
+    </marker>
+    <marker id="url-arrow-ok" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1e8a4c"/>
+    </marker>
+    <marker id="url-arrow-accent" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2c6cb0"/>
+    </marker>
+    <marker id="url-arrow-bad" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b42318"/>
+    </marker>
+  </defs>
+  <rect width="900" height="372" fill="#ffffff"/>
+  <text class="cap" x="450" y="30" text-anchor="middle">One gate for every URL</text>
+  <rect x="15" y="62" width="230" height="64" rx="12" fill="#f4f6f9" stroke="#d8dee6"/>
+  <text class="title" x="35" y="100">Typed in the toolbar</text>
+  <rect x="15" y="152" width="230" height="64" rx="12" fill="#f4f6f9" stroke="#d8dee6"/>
+  <text class="title" x="35" y="180">Saved inside the .pptx</text>
+  <text class="small" x="35" y="199" style="fill:#b42318">anyone can edit this file</text>
+  <rect x="15" y="242" width="230" height="64" rx="12" fill="#f4f6f9" stroke="#d8dee6"/>
+  <text class="title" x="35" y="280">Window button</text>
+  <rect x="300" y="102" width="240" height="172" rx="12" fill="rgba(44,108,176,.08)" stroke="#2c6cb0" stroke-width="1.6"/>
+  <text class="cap" x="322" y="132" style="fill:#2c6cb0">url-tools.js</text>
+  <text class="title mono" x="322" y="162">safeUrl()</text>
+  <text class="body" x="322" y="194">Only http:// and https://</text>
+  <text class="body" x="322" y="215">No user:password@host</text>
+  <text class="body" x="322" y="236">No other schemes</text>
+  <path d="M249,94 C275,94 272,188 294,188" stroke="#6b7684" stroke-width="1.8" fill="none" marker-end="url(#url-arrow)"/>
+  <path d="M249,184 C275,184 272,188 294,188" stroke="#6b7684" stroke-width="1.8" fill="none" marker-end="url(#url-arrow)"/>
+  <path d="M249,274 C275,274 272,188 294,188" stroke="#6b7684" stroke-width="1.8" fill="none" marker-end="url(#url-arrow)"/>
+  <rect x="600" y="52" width="285" height="104" rx="12" fill="rgba(180,35,24,.06)" stroke="#b42318"/>
+  <text class="cap" x="622" y="80" style="fill:#b42318">Refused</text>
+  <text class="small mono" x="622" y="104">javascript: · data: · file: · …</text>
+  <text class="body" x="622" y="126">A friendly message,</text>
+  <text class="body" x="622" y="144">nothing is loaded.</text>
+  <rect x="600" y="180" width="285" height="176" rx="12" fill="rgba(30,138,76,.08)" stroke="#1e8a4c"/>
+  <text class="cap" x="622" y="208" style="fill:#1e8a4c">Accepted</text>
+  <text class="title mono" x="622" y="236">toEmbedUrl()</text>
+  <text class="body" x="622" y="262">YouTube &amp; Vimeo links become</text>
+  <text class="body" x="622" y="281">their embeddable player.</text>
+  <text class="body" x="622" y="300">Other sites are unchanged.</text>
+  <text class="title" x="622" y="338" style="fill:#1e8a4c">→ Shown on the slide</text>
+  <path d="M544,152 C570,152 570,104 594,104" stroke="#b42318" stroke-width="1.8" fill="none" marker-end="url(#url-arrow-bad)"/>
+  <path d="M544,224 C570,224 570,268 594,268" stroke="#1e8a4c" stroke-width="1.8" fill="none" marker-end="url(#url-arrow-ok)"/>
+
+</svg>
