@@ -3,16 +3,18 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:type="ContentApp">
 
+  <!-- Keep this Id unchanged: presentations that already use the add-in reference it. -->
   <Id>e2b7c1a0-1234-5678-9abc-def012345678</Id>
-  <Version>1.3.0.0</Version>
+  <Version>1.4.0.0</Version>
   <ProviderName>PeopleWorks Services</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
 
   <DisplayName DefaultValue="Live Website Viewer"/>
   <Description DefaultValue="Embed and display live websites directly inside PowerPoint slides. Each slide can have its own URL."/>
 
-  <IconUrl DefaultValue="https://powerpointwebviewer.peopleworksservices.com/icon.png"/>
-  <SupportUrl DefaultValue="https://powerpointwebviewer.peopleworksservices.com/support"/>
+  <IconUrl DefaultValue="https://powerpointwebviewer.peopleworksservices.com/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://powerpointwebviewer.peopleworksservices.com/icon-64.png"/>
+  <SupportUrl DefaultValue="https://github.com/peopleworks/powerpointwebviewer/issues"/>
 
   <Hosts>
     <Host Name="Presentation"/>
@@ -20,7 +22,10 @@
 
   <DefaultSettings>
     <SourceLocation DefaultValue="https://powerpointwebviewer.peopleworksservices.com/viewer.html"/>
+    <RequestedWidth>800</RequestedWidth>
+    <RequestedHeight>450</RequestedHeight>
   </DefaultSettings>
 
-  <Permissions>ReadWriteDocument</Permissions>
+  <!-- Restricted is enough: the add-in only stores its own settings (the URL). -->
+  <Permissions>Restricted</Permissions>
 </OfficeApp>

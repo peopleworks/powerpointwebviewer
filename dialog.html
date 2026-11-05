@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Opening website…</title>
+  <!--
+    Bridge page for the "Window" button.
+    Office's Dialog API only opens pages on the add-in's own domain, so
+    viewer.html opens this page (dialog.html?url=...) and this page
+    redirects to the real website after checking the URL is safe.
+  -->
+  <style>
+    body {
+      margin: 0; height: 100vh; display: flex; align-items: center; justify-content: center;
+      font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f5; color: #333; text-align: center;
+    }
+    p { max-width: 420px; line-height: 1.5; padding: 0 16px; }
+  </style>
+  <script src="url-tools.js"></script>
+</head>
+<body>
+  <p id="msg">Opening website…</p>
+  <script>
+    (function () {
+      var raw = new URLSearchParams(location.search).get('url');
+      var target = raw ? UrlTools.safeUrl(raw) : null;
+      if (target) {
+        location.replace(target);
+      } else {
+        document.getElementById('msg').textContent =
+          'This link cannot be opened. Only http:// and https:// websites are allowed.';
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -231,7 +231,7 @@
     <div class="feature-item">
       <div class="icon">🌐</div>
       <h3>Live Websites</h3>
-      <p>Display any website directly inside your slides</p>
+      <p>Display live websites directly inside your slides (sites that block embedding open in a window)</p>
     </div>
     <div class="feature-item">
       <div class="icon">🎬</div>
@@ -251,7 +251,7 @@
     <div class="feature-item">
       <div class="icon">⚡</div>
       <h3>Easy Setup</h3>
-      <p>Just two files: viewer.html + manifest.xml</p>
+      <p>Only static files: no server code, no installs</p>
     </div>
   </div>
 
@@ -268,8 +268,11 @@
       <li>Hide/show controls, reload, and fullscreen buttons for presentation mode</li>
       <li>Press <strong>Enter</strong> to load (no need to click the button)</li>
       <li>Saves the URL per slide using Office Settings API</li>
+      <li>Only opens <code>http://</code> and <code>https://</code> links &mdash; safe even with presentations shared by others</li>
     </ul>
   </div>
+
+  <p>Below is a <strong>minimal version</strong> to learn how it works. The complete viewer (video support, Window button, safety checks) is <code>viewer.html</code> + <code>url-tools.js</code> + <code>dialog.html</code> in the <a href="https://github.com/peopleworks/powerpointwebviewer" target="_blank">GitHub repository</a>.</p>
 
   <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -348,11 +351,19 @@
     const overlay  = document.getElementById('overlay');
     let controlsVisible = true;
 
+    // Only allow http(s) websites. Never load other schemes (javascript:, data:, ...):
+    // the saved URL lives inside the .pptx file, which anyone can edit.
     function normalizeUrl(url) {
       url = url.trim();
       if (!url) return '';
-      if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
-      return url;
+      if (!/^https?:\/\//i.test(url)) {
+        if (/^[a-z][a-z0-9+.-]*:(?!\d)/i.test(url)) return '';
+        url = 'https://' + url;
+      }
+      try {
+        const u = new URL(url);
+        return (u.protocol === 'https:' || u.protocol === 'http:') ? u.href : '';
+      } catch (e) { return ''; }
     }
 
     function loadUrl() {
@@ -377,7 +388,7 @@
 
     Office.onReady(() =&gt; {
       try {
-        const saved = Office.context.document.settings.get('webViewerUrl');
+        const saved = normalizeUrl(String(Office.context.document.settings.get('webViewerUrl') || ''));
         if (saved) { urlInput.value = saved; webFrame.src = saved;
                      overlay.classList.add('hidden'); }
       } catch(e) {}
@@ -395,15 +406,16 @@
            xsi:type="ContentApp"&gt;
 
   &lt;Id&gt;e2b7c1a0-1234-5678-9abc-def012345678&lt;/Id&gt;
-  &lt;Version&gt;1.3.0.0&lt;/Version&gt;
+  &lt;Version&gt;1.4.0.0&lt;/Version&gt;
   &lt;ProviderName&gt;PeopleWorks Services&lt;/ProviderName&gt;
   &lt;DefaultLocale&gt;en-US&lt;/DefaultLocale&gt;
 
   &lt;DisplayName DefaultValue="Live Website Viewer"/&gt;
   &lt;Description DefaultValue="Embed and display live websites directly inside PowerPoint slides."/&gt;
 
-  &lt;IconUrl DefaultValue="https://powerpointwebviewer.peopleworksservices.com/icon.png"/&gt;
-  &lt;SupportUrl DefaultValue="https://powerpointwebviewer.peopleworksservices.com/support"/&gt;
+  &lt;IconUrl DefaultValue="https://powerpointwebviewer.peopleworksservices.com/icon-32.png"/&gt;
+  &lt;HighResolutionIconUrl DefaultValue="https://powerpointwebviewer.peopleworksservices.com/icon-64.png"/&gt;
+  &lt;SupportUrl DefaultValue="https://github.com/peopleworks/powerpointwebviewer/issues"/&gt;
 
   &lt;Hosts&gt;
     &lt;Host Name="Presentation"/&gt;
@@ -411,9 +423,11 @@
 
   &lt;DefaultSettings&gt;
     &lt;SourceLocation DefaultValue="https://powerpointwebviewer.peopleworksservices.com/viewer.html"/&gt;
+    &lt;RequestedWidth&gt;800&lt;/RequestedWidth&gt;
+    &lt;RequestedHeight&gt;450&lt;/RequestedHeight&gt;
   &lt;/DefaultSettings&gt;
 
-  &lt;Permissions&gt;ReadWriteDocument&lt;/Permissions&gt;
+  &lt;Permissions&gt;Restricted&lt;/Permissions&gt;
 &lt;/OfficeApp&gt;</code></pre>
 
   <div class="step-title"><span class="step-number">3</span> Install & Use</div>
@@ -432,6 +446,7 @@
     <p><strong>Note for PowerPoint Online users:</strong> The browser enforces strict security rules. Many websites (Google, YouTube, Facebook, etc.) block being embedded inside frames. If a website does not display:</p>
     <ul>
       <li>Click the <strong>"Window"</strong> button in the toolbar to open the site in a separate browser window using Office's Dialog API</li>
+      <li>After a page loads, a <strong>"Site not showing? Open in window"</strong> shortcut appears for a few seconds</li>
       <li>If the iframe times out, you'll see an <strong>"Open in Window"</strong> button automatically</li>
       <li>Sites that work well in frames: custom dashboards, internal tools, documentation sites, and sites without <code>X-Frame-Options</code> headers</li>
     </ul>
@@ -526,7 +541,7 @@
     <div class="feature-item">
       <div class="icon">🌐</div>
       <h3>Sitios Web en Vivo</h3>
-      <p>Muestra cualquier sitio web directamente en tus diapositivas</p>
+      <p>Muestra sitios web en vivo dentro de tus diapositivas (los que bloquean la incrustación se abren en una ventana)</p>
     </div>
     <div class="feature-item">
       <div class="icon">🎬</div>
@@ -546,7 +561,7 @@
     <div class="feature-item">
       <div class="icon">⚡</div>
       <h3>Fácil de Instalar</h3>
-      <p>Solo dos archivos: viewer.html + manifest.xml</p>
+      <p>Solo archivos estáticos: sin código de servidor ni instalaciones</p>
     </div>
   </div>
 
@@ -563,10 +578,11 @@
       <li>Botones para ocultar/mostrar controles, recargar y pantalla completa</li>
       <li>Presiona <strong>Enter</strong> para cargar (no necesitas hacer clic)</li>
       <li>Guarda la URL por diapositiva usando Office Settings API</li>
+      <li>Solo abre enlaces <code>http://</code> y <code>https://</code> &mdash; seguro incluso con presentaciones compartidas por otros</li>
     </ul>
   </div>
 
-  <p>El código completo del viewer está en la sección en inglés arriba. Puedes copiarlo directamente.</p>
+  <p>En la sección en inglés hay una <strong>versión mínima</strong> para aprender cómo funciona. El viewer completo (video, botón Window, validaciones de seguridad) es <code>viewer.html</code> + <code>url-tools.js</code> + <code>dialog.html</code> en el <a href="https://github.com/peopleworks/powerpointwebviewer" target="_blank">repositorio de GitHub</a>.</p>
 
   <div class="step-title"><span class="step-number">2</span> Crea el Manifiesto</div>
   <p>Guarda el siguiente XML como <code>manifest.xml</code>. Este archivo le dice a PowerPoint dónde encontrar tu complemento:</p>
@@ -588,6 +604,7 @@
     <p><strong>Nota para usuarios de PowerPoint Online:</strong> El navegador aplica reglas de seguridad estrictas. Muchos sitios web (Google, YouTube, Facebook, etc.) bloquean ser incrustados dentro de frames. Si un sitio no se muestra:</p>
     <ul>
       <li>Haz clic en el botón <strong>"Window"</strong> en la barra de herramientas para abrir el sitio en una ventana separada usando la API de Diálogos de Office</li>
+      <li>Después de cargar una página, aparece por unos segundos el atajo <strong>"Site not showing? Open in window"</strong></li>
       <li>Si el iframe expira, verás un botón <strong>"Open in Window"</strong> automáticamente</li>
       <li>Sitios que funcionan bien en frames: dashboards personalizados, herramientas internas, sitios de documentación y sitios sin cabeceras <code>X-Frame-Options</code></li>
     </ul>
